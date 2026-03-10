@@ -8,6 +8,7 @@ import { STEP_DEFS, type StepId } from './steps.js'
 import { createUnsignedProofJwt, isAllowedRelayTarget, normalizeGitHubUrl, waitFor } from './utils.js'
 
 type ServiceName = 'issuer' | 'verifier'
+type ServiceMode = 'dev' | 'start'
 type ServiceStatus = 'stopped' | 'starting' | 'running' | 'stopping' | 'error'
 type StepStatus = 'pending' | 'running' | 'completed' | 'failed'
 type EvidenceKind = 'note' | 'process' | 'http' | 'relay'
@@ -98,6 +99,7 @@ const MAX_EVIDENCE = 40
 const MAX_RELAY_EVENTS = 40
 const ISSUER_BASE_URL = 'http://localhost:3001'
 const VERIFIER_BASE_URL = 'http://localhost:3002'
+const SERVICE_MODE = parseServiceMode(process.env.DEMO_CONDUCTOR_SERVICE_MODE)
 
 export class DemoController {
   private readonly repoRoot: string
@@ -125,8 +127,8 @@ export class DemoController {
       qrSvg: null,
       relayEnabled: false,
       services: {
-        issuer: this.createServiceState('pnpm --filter issuer dev'),
-        verifier: this.createServiceState('pnpm --filter verifier dev')
+        issuer: this.createServiceState('issuer'),
+        verifier: this.createServiceState('verifier')
       },
       steps: Object.fromEntries(this.stepIds.map((stepId) => [stepId, 'pending'])) as Record<StepId, StepStatus>,
       evidence: [],
@@ -166,8 +168,8 @@ export class DemoController {
     await this.stopService('verifier')
     await this.stopService('issuer')
     await this.resetStatusList()
-    this.state.services.issuer = this.createServiceState('pnpm --filter issuer dev')
-    this.state.services.verifier = this.createServiceState('pnpm --filter verifier dev')
+    this.state.services.issuer = this.createServiceState('issuer')
+    this.state.services.verifier = this.createServiceState('verifier')
     this.state.busy = false
     this.state.currentStepId = null
     this.state.lastError = null
@@ -260,11 +262,11 @@ export class DemoController {
     await this.stopService('issuer')
   }
 
-  private createServiceState(command: string): ServiceState {
+  private createServiceState(name: ServiceName): ServiceState {
     return {
       status: 'stopped',
       pid: null,
-      command,
+      command: buildServiceCommand(name, SERVICE_MODE),
       env: {},
       startedAt: null,
       lastExitCode: null,
@@ -542,7 +544,7 @@ export class DemoController {
       await this.stopService(name)
     }
 
-    const args = ['--filter', name, 'dev']
+    const args = ['--filter', name, SERVICE_MODE]
     const child = spawn('pnpm', args, {
       cwd: this.repoRoot,
       env: {
@@ -777,3 +779,11 @@ export class DemoController {
 }
 
 type ManagedProcess = ChildProcessByStdio<null, Readable, Readable>
+
+function buildServiceCommand(name: ServiceName, mode: ServiceMode) {
+  return `pnpm --filter ${name} ${mode}`
+}
+
+function parseServiceMode(value: string | undefined): ServiceMode {
+  return value === 'start' ? 'start' : 'dev'
+}

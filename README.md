@@ -75,16 +75,26 @@ See `DEMO.md` for architecture and `LEARNING_LAB.md` for the 2-hour lab.
 
 For the Village presentation, use the local demo conductor instead of walking attendees through a terminal build.
 
-1. Install workspace dependencies: `pnpm install -r`
-2. Start the conductor UI: `pnpm demo:conductor`
-3. Open `http://localhost:3210`
-4. Run the built-in scenario steps:
+Recommended local launch:
+
+1. Run `pnpm demo:up`
+2. Open `http://localhost:3210`
+3. Run the built-in scenario steps:
    - Start issuer
    - Start verifier
    - Issue SD-JWT
    - Issue BBS+
    - Enable relay
    - Revoke credential
+
+Containerized launch:
+
+- `pnpm demo:docker`
+- or `docker compose up --build demo-conductor`
+
+Fast development mode:
+
+- `pnpm demo:conductor`
 
 The conductor starts and restarts issuer/verifier for you, shows the exact HTTP calls and responses, exposes live issuer/verifier debug state, includes a built-in local relay view for the OHTTP story, and renders a QR code to the GitHub repo for the take-home handoff.
 
