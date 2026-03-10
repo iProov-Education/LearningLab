@@ -61,6 +61,9 @@
 - [x] Add a reconciliation report to the course-ops control plane
 - [x] Verify the reconciliation flow locally
 - [x] Commit the reconciliation flow
-- [ ] Track the remaining implementation-kit docs and overlay scaffolding
-- [ ] Verify the tracked implementation-kit layout locally
-- [ ] Commit the remaining implementation-kit scaffolding
+- [x] Track the remaining implementation-kit docs and overlay scaffolding
+- [x] Verify the tracked implementation-kit layout locally
+- [x] Commit the remaining implementation-kit scaffolding
+- [ ] Track the course-ops workflow scaffolding
+- [ ] Verify the workflow scaffolding locally
+- [ ] Commit the workflow scaffolding
