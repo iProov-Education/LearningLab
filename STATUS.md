@@ -5,7 +5,7 @@
 - [x] Commit the demo-conductor changes
 - [x] Add a local launcher script and Docker Compose entrypoint for the demo conductor
 - [x] Verify the local launcher and Docker artifacts
-- [ ] Commit the local launcher and Docker updates
+- [x] Commit the local launcher and Docker updates
 - [x] Add a concrete local GitHub Classroom development workflow to the repo docs and scripts
 - [x] Verify the local autograding workflow on the current tree
 - [x] Commit the Classroom local-development changes
