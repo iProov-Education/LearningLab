@@ -71,6 +71,7 @@ Usage:
   node src/cli.mjs provision-github --config <file> --assignment <file> --roster <file> [--out <file>] [--apply]
   node src/cli.mjs progress --config <file> --repo-map <file> [--out <file>]
   node src/cli.mjs advance-ready --config <file> --progress <file> [--from <lab-id>] [--out <file>] [--apply]
+  node src/cli.mjs reconcile --config <file> --assignment <file> --roster <file> --repo-map <file> [--out <file>]
   node src/cli.mjs publish-google --config <file> --assignment <file> [--out <file>] [--state DRAFT|PUBLISHED] [--apply]
   node src/cli.mjs patch-google --config <file> --assignment <file> (--coursework <file> | --coursework-id <id>) [--out <file>] [--state DRAFT|PUBLISHED] [--apply]
   node src/cli.mjs sync-grades --config <file> --assignment <file> --repo-map <file> (--coursework <file> | --coursework-id <id>) [--out <file>] [--apply]

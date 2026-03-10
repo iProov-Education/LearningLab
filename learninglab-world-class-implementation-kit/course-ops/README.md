@@ -93,6 +93,16 @@ node src/cli.mjs advance-ready \
   --apply
 ```
 
+### Reconcile roster, repo-map, and live GitHub state
+```bash
+node src/cli.mjs reconcile \
+  --config ../catalog/course.config.example.yaml \
+  --assignment ../catalog/assignments/lab-01.yaml \
+  --roster ../artifacts/joined-roster.learninglab.csv \
+  --repo-map ../artifacts/repo-map.lab-01.json \
+  --out ../artifacts/reconcile.lab-01.json
+```
+
 ### Publish Google Classroom course work
 ```bash
 node src/cli.mjs publish-google \
@@ -121,4 +131,5 @@ node src/cli.mjs sync-grades \
 - The GitHub commands assume the automation token can create repos from the template, set repo variables, add collaborators, and read workflow runs.
 - `progress` reads `LAB_ID` plus the latest workflow run to identify which repos are ready to advance.
 - `advance-ready` consumes the progress artifact and only updates `LAB_ID` for repos already marked ready.
+- `reconcile` compares the joined roster, repo-map, and live GitHub state to surface drift before it becomes a grading problem.
 - The grade sync writes `draftGrade` by default unless your course config enables assigned-grade publication.

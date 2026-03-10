@@ -135,6 +135,16 @@ export async function addCollaborator(client, { owner, repo, username, permissio
   }
 }
 
+export async function getCollaboratorPermission(client, { owner, repo, username }) {
+  try {
+    const result = await client.request(`/repos/${owner}/${repo}/collaborators/${username}/permission`)
+    return result?.permission || result?.role_name || null
+  } catch (error) {
+    if (error.status === 404) return null
+    throw error
+  }
+}
+
 export async function replaceTopics(client, { owner, repo, names }) {
   return client.request(`/repos/${owner}/${repo}/topics`, {
     method: 'PUT',

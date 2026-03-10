@@ -14,6 +14,7 @@ import {
   getRepository,
   assertRepositoryReusable,
   getRepositoryVariable,
+  getCollaboratorPermission,
   upsertRepositoryVariable,
   addCollaborator,
   replaceTopics,
@@ -39,6 +40,11 @@ import {
   summarizeProvisioningRoster,
   hasBlockingProvisioningIssues
 } from './lib/roster.mjs'
+import {
+  buildReconciliationPlan,
+  summarizeRepoReconciliation,
+  summarizeReconciliation
+} from './lib/reconcile.mjs'
 
 main().catch((error) => {
   console.error(`[course-ops] FAILED: ${error?.message || error}`)
@@ -78,6 +84,9 @@ async function main() {
     case 'advance-ready':
       await handleAdvanceReady({ args, courseConfig })
       return
+    case 'reconcile':
+      await handleReconcile({ args, courseConfig, assignment })
+      return
     case 'publish-google':
       await handlePublishGoogle({ args, courseConfig, assignment })
       return
@@ -97,6 +106,7 @@ async function loadAssignmentIfNeeded(args) {
     'validate',
     'plan',
     'provision-github',
+    'reconcile',
     'publish-google',
     'patch-google',
     'sync-grades'
@@ -481,6 +491,112 @@ async function handleAdvanceReady({ args, courseConfig }) {
       fromLabId: args.from || null
     },
     counts,
+    repos
+  })
+  console.log(`[course-ops] wrote ${out}`)
+}
+
+async function handleReconcile({ args, courseConfig, assignment }) {
+  if (!args.roster) throw new Error('--roster is required for reconcile')
+  if (!args.repoMap) throw new Error('--repo-map is required for reconcile')
+
+  const rosterPath = path.resolve(args.roster)
+  const repoMapPath = path.resolve(args.repoMap)
+  const [roster, repoMap] = await Promise.all([
+    loadRoster(rosterPath),
+    readJson(repoMapPath)
+  ])
+  const plan = buildReconciliationPlan({
+    courseConfig,
+    assignment,
+    roster,
+    repoMap
+  })
+  const client = createGitHubClient()
+  const repos = []
+
+  for (const row of plan.repoChecks) {
+    let repository = null
+    let currentLabId = null
+    let collaboratorPermission = null
+    let latestRun = null
+
+    try {
+      repository = await getRepository(client, {
+        owner: row.repoOwner,
+        repo: row.repoName
+      })
+
+      const [labId, permission, run] = await Promise.all([
+        getRepositoryVariable(client, {
+          owner: row.repoOwner,
+          repo: row.repoName,
+          name: 'LAB_ID'
+        }),
+        row.expectedCollaborator
+          ? getCollaboratorPermission(client, {
+            owner: row.repoOwner,
+            repo: row.repoName,
+            username: row.expectedCollaborator
+          })
+          : Promise.resolve(null),
+        fetchLatestWorkflowRun(client, {
+          owner: row.repoOwner,
+          repo: row.repoName,
+          workflowFile: courseConfig.github.workflowFile,
+          branch: courseConfig.github.defaultBranch
+        })
+      ])
+
+      currentLabId = labId
+      collaboratorPermission = permission
+      latestRun = run
+    } catch (error) {
+      if (error.status !== 404) throw error
+    }
+
+    repos.push(
+      summarizeRepoReconciliation({
+        row,
+        repository,
+        currentLabId,
+        collaboratorPermission,
+        latestRun
+      })
+    )
+  }
+
+  const summary = summarizeReconciliation({
+    rosterStudents: roster.length,
+    missingRepoMapEntries: plan.missingRepoMapEntries,
+    unexpectedRepoMapEntries: plan.unexpectedRepoMapEntries,
+    repos
+  })
+
+  const out = args.out
+    ? path.resolve(args.out)
+    : path.resolve(
+      courseConfig.__baseDir,
+      courseConfig.paths.artifactsDir,
+      `reconcile.${assignment.id}.json`
+    )
+
+  await writeJson(out, {
+    generatedAt: new Date().toISOString(),
+    course: courseConfig.course,
+    assignment: {
+      id: assignment.id,
+      labId: assignment.labId,
+      title: assignment.title
+    },
+    rosterPath,
+    repoMapPath,
+    workflowFile: courseConfig.github.workflowFile,
+    workflowBranch: courseConfig.github.defaultBranch,
+    ok: summary.ok,
+    counts: summary.counts,
+    missingRepoMapEntries: plan.missingRepoMapEntries,
+    unexpectedRepoMapEntries: plan.unexpectedRepoMapEntries,
     repos
   })
   console.log(`[course-ops] wrote ${out}`)

@@ -82,6 +82,16 @@ node src/cli.mjs advance-ready \
   --apply
 ```
 
+### Reconcile roster, repo map, and GitHub state
+```bash
+node src/cli.mjs reconcile \
+  --config ../catalog/course.config.example.yaml \
+  --assignment ../catalog/assignments/lab-01.yaml \
+  --roster ../artifacts/joined-roster.learninglab.csv \
+  --repo-map ../artifacts/repo-map.lab-01.json \
+  --out ../artifacts/reconcile.lab-01.json
+```
+
 ### Create Classroom coursework as draft
 ```bash
 node src/cli.mjs publish-google \
@@ -114,17 +124,19 @@ node src/cli.mjs sync-grades \
 6. provision-github apply
 7. progress
 8. advance-ready
-9. publish-google draft
-10. UI check in Classroom
-11. publish-google published or patch state
-12. monitor first workflows
+9. reconcile
+10. publish-google draft
+11. UI check in Classroom
+12. publish-google published or patch state
+13. monitor first workflows
 
 ### Grading
 1. progress identifies repos that have passed the current lab
 2. advance-ready moves only the passing repos to the next `LAB_ID`
-3. nightly grade sync writes `draftGrade`
-4. instructor reviews outliers
-5. when ready, rerun with assigned-grade publication enabled
+3. reconcile flags repo drift before syncing grades
+4. nightly grade sync writes `draftGrade`
+5. instructor reviews outliers
+6. when ready, rerun with assigned-grade publication enabled
 
 ## Expected artifacts
 
@@ -174,6 +186,15 @@ Contains:
 - optional `fromLabId` filter
 - counts for advanced vs skipped repos
 - per-repo advancement decision and resulting `LAB_ID`
+
+### Reconciliation artifact
+Contains:
+- joined-roster coverage vs repo-map coverage
+- missing or unexpected repo-map entries
+- repo existence and repo-name drift
+- current vs expected `LAB_ID`
+- collaborator presence for the expected GitHub username
+- latest workflow state and run URL
 
 ### Coursework artifact
 Contains:

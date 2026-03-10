@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { assertRepositoryReusable } from '../src/lib/github.mjs'
+import { assertRepositoryReusable, getCollaboratorPermission } from '../src/lib/github.mjs'
 
 test('assertRepositoryReusable accepts a matching repository with expected visibility', () => {
   const repository = assertRepositoryReusable(
@@ -37,4 +37,22 @@ test('assertRepositoryReusable rejects archived or visibility-mismatched reposit
     ),
     /not safe to reuse/
   )
+})
+
+test('getCollaboratorPermission returns null for missing collaborators', async () => {
+  const client = {
+    async request() {
+      const error = new Error('not found')
+      error.status = 404
+      throw error
+    }
+  }
+
+  const permission = await getCollaboratorPermission(client, {
+    owner: 'acme',
+    repo: 'learninglab-lab-01-ada',
+    username: 'adalovelace'
+  })
+
+  assert.equal(permission, null)
 })

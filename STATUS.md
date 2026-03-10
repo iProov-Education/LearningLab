@@ -58,6 +58,9 @@
 - [x] Add ready-only lab advancement to the course-ops control plane
 - [x] Verify the advancement flow locally
 - [x] Commit the advancement flow
-- [ ] Add a reconciliation report to the course-ops control plane
-- [ ] Verify the reconciliation flow locally
-- [ ] Commit the reconciliation flow
+- [x] Add a reconciliation report to the course-ops control plane
+- [x] Verify the reconciliation flow locally
+- [x] Commit the reconciliation flow
+- [ ] Track the remaining implementation-kit docs and overlay scaffolding
+- [ ] Verify the tracked implementation-kit layout locally
+- [ ] Commit the remaining implementation-kit scaffolding

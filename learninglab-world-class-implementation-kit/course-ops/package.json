@@ -12,6 +12,7 @@
     "provision:github": "node src/cli.mjs provision-github",
     "progress": "node src/cli.mjs progress",
     "advance:ready": "node src/cli.mjs advance-ready",
+    "reconcile": "node src/cli.mjs reconcile",
     "publish:google": "node src/cli.mjs publish-google",
     "patch:google": "node src/cli.mjs patch-google",
     "sync:grades": "node src/cli.mjs sync-grades",
