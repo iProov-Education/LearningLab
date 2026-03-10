@@ -8,6 +8,9 @@
 - [x] Commit the local launcher and Docker updates
 - [x] Preserve the repo QR code when the demo conductor runs in Docker
 - [x] Make service restarts reliable in Docker start mode
+- [x] Remove the default Docker Compose port collision between `learninglab` and `demo-conductor`
+- [x] Verify `docker compose up` defaults to the conductor path cleanly
+- [ ] Commit the Compose default fix
 - [x] Add a concrete local GitHub Classroom development workflow to the repo docs and scripts
 - [x] Verify the local autograding workflow on the current tree
 - [x] Commit the Classroom local-development changes

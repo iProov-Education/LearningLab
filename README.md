@@ -91,6 +91,8 @@ Containerized launch:
 
 - `pnpm demo:docker`
 - or `docker compose up --build demo-conductor`
+- plain `docker compose up --build` now defaults to the `demo-conductor` service
+- the older standalone `learninglab` container is still available with `docker compose --profile standalone up --build learninglab`
 - set `DEMO_CONDUCTOR_REPO_URL` if you want the QR code to point somewhere other than the default repo URL baked into `docker-compose.yml`
 
 Fast development mode:

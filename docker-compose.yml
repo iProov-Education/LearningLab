@@ -1,6 +1,7 @@
 services:
   learninglab:
     build: .
+    profiles: ["standalone"]
     ports:
       - "3001:3001"
       - "3002:3002"
