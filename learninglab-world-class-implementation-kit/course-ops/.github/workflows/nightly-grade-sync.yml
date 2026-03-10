@@ -1,0 +1,76 @@
+name: Nightly grade sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      assignment:
+        description: Path to the assignment YAML
+        required: true
+        default: ../catalog/assignments/lab-01.yaml
+      repo_map:
+        description: Path to the repo-map artifact
+        required: true
+        default: ../artifacts/repo-map.lab-01.json
+      coursework:
+        description: Path to the coursework artifact
+        required: true
+        default: ../artifacts/coursework.lab-01.json
+  schedule:
+    - cron: "17 2 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.7.0
+
+      - name: Install dependencies
+        working-directory: course-ops
+        run: pnpm install
+
+      - name: Snapshot repo progress
+        working-directory: course-ops
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_ADMIN }}
+        run: |
+          node src/cli.mjs progress \
+            --config ../catalog/course.config.example.yaml \
+            --repo-map "${{ inputs.repo_map || '../artifacts/repo-map.lab-01.json' }}" \
+            --out ../artifacts/progress.workflow.json
+
+      - name: Sync grades
+        working-directory: course-ops
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_ADMIN }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: |
+          node src/cli.mjs sync-grades \
+            --config ../catalog/course.config.example.yaml \
+            --assignment "${{ inputs.assignment || '../catalog/assignments/lab-01.yaml' }}" \
+            --repo-map "${{ inputs.repo_map || '../artifacts/repo-map.lab-01.json' }}" \
+            --coursework "${{ inputs.coursework || '../artifacts/coursework.lab-01.json' }}" \
+            --out ../artifacts/grade-sync.workflow.json \
+            --apply
+
+      - name: Upload grade-sync artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-grade-sync-artifacts
+          path: |
+            artifacts/progress.workflow.json
+            artifacts/grade-sync.workflow.json
+          if-no-files-found: warn

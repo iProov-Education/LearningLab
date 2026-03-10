@@ -64,6 +64,9 @@
 - [x] Track the remaining implementation-kit docs and overlay scaffolding
 - [x] Verify the tracked implementation-kit layout locally
 - [x] Commit the remaining implementation-kit scaffolding
-- [ ] Track the course-ops workflow scaffolding
-- [ ] Verify the workflow scaffolding locally
-- [ ] Commit the workflow scaffolding
+- [x] Track the starter override scaffolds
+- [x] Verify the starter override scaffolds locally
+- [x] Commit the starter override scaffolds
+- [x] Track the course-ops workflow scaffolding
+- [x] Verify the workflow scaffolding locally
+- [x] Commit the workflow scaffolding

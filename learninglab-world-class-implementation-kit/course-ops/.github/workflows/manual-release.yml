@@ -1,0 +1,84 @@
+name: Manual release
+
+on:
+  workflow_dispatch:
+    inputs:
+      assignment:
+        description: Path to the assignment YAML
+        required: true
+        default: ../catalog/assignments/lab-01.yaml
+      roster:
+        description: Path to the roster CSV
+        required: true
+        default: ../catalog/roster.sample.csv
+      apply:
+        description: Actually provision repos and create Classroom course work
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.7.0
+
+      - name: Install dependencies
+        working-directory: course-ops
+        run: pnpm install
+
+      - name: Validate and plan
+        working-directory: course-ops
+        run: |
+          node src/cli.mjs validate --config ../catalog/course.config.example.yaml --assignment "${{ inputs.assignment }}" --roster "${{ inputs.roster }}"
+          node src/cli.mjs plan --config ../catalog/course.config.example.yaml --assignment "${{ inputs.assignment }}" --roster "${{ inputs.roster }}" --out ../artifacts/plan.workflow.md
+
+      - name: Provision GitHub repos
+        if: ${{ inputs.apply }}
+        working-directory: course-ops
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_ADMIN }}
+        run: |
+          node src/cli.mjs provision-github \
+            --config ../catalog/course.config.example.yaml \
+            --assignment "${{ inputs.assignment }}" \
+            --roster "${{ inputs.roster }}" \
+            --out ../artifacts/repo-map.workflow.json \
+            --apply
+
+      - name: Publish Google Classroom coursework
+        if: ${{ inputs.apply }}
+        working-directory: course-ops
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: |
+          node src/cli.mjs publish-google \
+            --config ../catalog/course.config.example.yaml \
+            --assignment "${{ inputs.assignment }}" \
+            --out ../artifacts/coursework.workflow.json \
+            --state DRAFT \
+            --apply
+
+      - name: Upload release artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-release-artifacts
+          path: |
+            artifacts/plan.workflow.md
+            artifacts/repo-map.workflow.json
+            artifacts/coursework.workflow.json
+          if-no-files-found: warn

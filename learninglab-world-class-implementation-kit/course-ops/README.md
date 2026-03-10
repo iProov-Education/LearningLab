@@ -21,6 +21,8 @@ pnpm install
 
 Then fill the secrets in `.env`.
 
+Workflow scaffolding is included under `.github/workflows/` for manual release and nightly grade sync once this package is promoted into its own repo.
+
 ## Required external inputs
 
 - a course config YAML
