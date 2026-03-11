@@ -87,5 +87,5 @@
 - [x] Commit the booth-readiness updates
 - [x] Add Railway deployment config for the demo conductor
 - [x] Verify the Railway deployment changes locally
-- [ ] Commit the Railway deployment prep
-- [ ] Deploy the demo conductor to Railway
+- [x] Commit the Railway deployment prep
+- [x] Deploy the demo conductor to Railway
