@@ -34,6 +34,12 @@ export function resolveRepoUrl(configured: string | null | undefined, remote: st
   return normalizeGitHubUrl(remote)
 }
 
+export function resolvePort(value: string | number | null | undefined, fallback: number) {
+  const parsed = Number(value)
+  if (Number.isInteger(parsed) && parsed > 0) return parsed
+  return fallback
+}
+
 export function createAbortError(message = 'Operation aborted') {
   return new DOMException(message, 'AbortError')
 }

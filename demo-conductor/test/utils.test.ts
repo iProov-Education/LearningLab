@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { createUnsignedProofJwt, isAllowedRelayTarget, normalizeGitHubUrl, resolveRepoUrl, waitFor } from '../src/utils.ts'
+import { createUnsignedProofJwt, isAllowedRelayTarget, normalizeGitHubUrl, resolvePort, resolveRepoUrl, waitFor } from '../src/utils.ts'
 
 test('createUnsignedProofJwt encodes a nonce-bearing payload', () => {
   const token = createUnsignedProofJwt({ nonce: 'abc123', aud: 'http://localhost:3001/credential' })
@@ -34,6 +34,14 @@ test('resolveRepoUrl prefers explicit configuration over git metadata', () => {
     resolveRepoUrl('', 'git@github.com:advatar/LearningLab.git'),
     'https://github.com/advatar/LearningLab'
   )
+})
+
+test('resolvePort returns the parsed port or falls back cleanly', () => {
+  assert.equal(resolvePort('8080', 3210), 8080)
+  assert.equal(resolvePort(5050, 3210), 5050)
+  assert.equal(resolvePort('0', 3210), 3210)
+  assert.equal(resolvePort('not-a-port', 3210), 3210)
+  assert.equal(resolvePort(undefined, 3210), 3210)
 })
 
 test('waitFor aborts promptly when the signal is cancelled', async () => {

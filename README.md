@@ -96,6 +96,12 @@ Containerized launch:
 - the older standalone `learninglab` container is still available with `docker compose --profile standalone up --build learninglab`
 - set `DEMO_CONDUCTOR_REPO_URL` if you want the QR code to point somewhere other than the default repo URL baked into `docker-compose.yml`
 
+Railway deployment:
+
+- the repo includes [railway.toml](/Users/johansellstrom/dev/iproov/RSA/LearningLab/railway.toml) for a single-service Railway deploy
+- Railway should run the conductor as the public web process while issuer/verifier stay inside the same container as child processes
+- the conductor now honors Railway's injected `PORT`
+
 Fast development mode:
 
 - `pnpm demo:conductor`

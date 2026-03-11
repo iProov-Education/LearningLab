@@ -85,3 +85,7 @@
 - [x] Verify the hard reset flow locally
 - [x] Add a presenter script for the Village speed-build demo
 - [x] Commit the booth-readiness updates
+- [x] Add Railway deployment config for the demo conductor
+- [x] Verify the Railway deployment changes locally
+- [ ] Commit the Railway deployment prep
+- [ ] Deploy the demo conductor to Railway

@@ -2,9 +2,10 @@ import path from 'node:path'
 import express from 'express'
 import { DemoController } from './controller.js'
 import { STEP_DEFS, isStepId } from './steps.js'
+import { resolvePort } from './utils.js'
 
 const app = express()
-const port = Number(process.env.DEMO_CONDUCTOR_PORT || 3210)
+const port = resolvePort(process.env.PORT, resolvePort(process.env.DEMO_CONDUCTOR_PORT, 3210))
 const repoRoot = path.resolve(process.cwd(), '..')
 const publicDir = path.resolve(process.cwd(), 'public')
 const controller = new DemoController({ repoRoot, port })
