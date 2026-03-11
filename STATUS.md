@@ -95,5 +95,5 @@
 - [x] Redeploy the layout fix to Railway
 - [x] Add real iProov ceremony support to the issuer and demo conductor
 - [x] Verify the real iProov ceremony support locally
-- [ ] Commit the iProov ceremony updates
-- [ ] Redeploy the iProov ceremony updates to Railway
+- [x] Commit the iProov ceremony updates
+- [x] Redeploy the iProov ceremony updates to Railway
