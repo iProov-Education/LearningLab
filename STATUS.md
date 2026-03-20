@@ -110,8 +110,10 @@
 - [x] Clone the external iOS and Android wallet forks beside `LearningLab`
 - [x] Keep wallet iProov support additive so the demo-conductor flow remains unchanged
 - [x] Add wallet-safe native iProov claim data to the issuer without changing the demo-conductor flow
-- [ ] Integrate the official native iProov iOS SDK into the wallet presentation flow
-- [ ] Integrate iProov into the Android wallet presentation flow
+- [x] Integrate the official native iProov iOS SDK into the wallet presentation flow
+- [x] Integrate iProov into the Android wallet presentation flow
 - [x] Document the native iOS iProov setup for students and instructors
+- [ ] Resolve the transient iOS package fetch failures and rerun the wallet build locally
+- [ ] Resolve the transient Android dependency download failures and rerun the wallet tests locally
 - [ ] Verify the wallet fork workflow and wallet integrations locally
-- [ ] Commit the wallet fork workflow updates
+- [x] Commit the wallet fork workflow updates
