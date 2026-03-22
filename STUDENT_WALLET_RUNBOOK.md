@@ -93,8 +93,13 @@ Expected callback URL:
 ### iOS prerequisites
 
 - Xcode installed
-- an iOS simulator for demo-mode testing
+- an Apple Silicon iOS simulator for demo-mode testing
 - a physical iPhone if you want the native iProov SDK path
+
+Important:
+- use a concrete arm64 simulator destination such as `iPhone 17 Pro`
+- do not use the generic `Any iOS Simulator Device` target for this wallet fork
+- the current upstream PoDoFo dependency fails the x86_64 simulator link step, so Intel-Mac simulator builds are not the supported classroom path
 
 The upstream wallet docs say the project has two schemes:
 - `EUDI Wallet Dev`
@@ -104,10 +109,24 @@ The upstream wallet docs say the project has two schemes:
 
 1. Open `/Users/johansellstrom/dev/iproov/RSA/eudi-app-ios-wallet-ui/EudiReferenceWallet.xcodeproj` in Xcode.
 2. Choose the normal development scheme you use for local runs.
-3. Open [Wallet.plist](/Users/johansellstrom/dev/iproov/RSA/eudi-app-ios-wallet-ui/Wallet/Wallet.plist).
-4. Make sure:
+3. Choose a concrete simulator or device destination.
+4. If you are using a simulator, choose an arm64 simulator such as `iPhone 17 Pro`.
+5. Do not build against `Any iOS Simulator Device`.
+6. Open [Wallet.plist](/Users/johansellstrom/dev/iproov/RSA/eudi-app-ios-wallet-ui/Wallet/Wallet.plist).
+7. Make sure:
    - `IProov Enabled` is `true`
    - `IProov Issuer Base URL` points at your issuer
+
+CLI verification command:
+
+```bash
+xcodebuild \
+  -project /Users/johansellstrom/dev/iproov/RSA/eudi-app-ios-wallet-ui/EudiReferenceWallet.xcodeproj \
+  -scheme 'EUDI Wallet Dev' \
+  -configuration 'Debug Dev' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  build
+```
 
 Use these base URLs:
 
@@ -164,6 +183,11 @@ Real-iProov test:
 
 - "Real iProov on iOS requires a physical device."
   - switch the issuer back to demo mode or run on a real iPhone
+
+- the Xcode build fails on `Any iOS Simulator Device` or with `_OBJC_CLASS_$_PodofoWrapper` for `x86_64`
+  - switch to a concrete arm64 simulator such as `iPhone 17 Pro`
+  - or use a physical iPhone
+  - do not treat that failure as an iProov bug; it is the current upstream PoDoFo simulator limitation
 
 - the wallet never returns from the web fallback
   - confirm the callback URL is still `eudi-wallet://iproov`

@@ -113,9 +113,11 @@
 - [x] Integrate the official native iProov iOS SDK into the wallet presentation flow
 - [x] Integrate iProov into the Android wallet presentation flow
 - [x] Document the native iOS iProov setup for students and instructors
-- [ ] Resolve the transient iOS package fetch failures and rerun the wallet build locally
-- [ ] Resolve the transient Android dependency download failures and rerun the wallet tests locally
-- [ ] Verify the wallet fork workflow and wallet integrations locally
+- [x] Resolve the transient iOS package fetch failures and rerun the wallet build locally
+- [x] Resolve the transient Android dependency download failures and rerun the wallet tests locally
+- [x] Verify the wallet fork workflow and wallet integrations locally
+- [x] Fix the Android iProov callback helper so its unit tests pass in the wallet fork
+- [x] Diagnose the iOS simulator linker failure after package resolution and record the supported path clearly
 - [x] Commit the wallet fork workflow updates
 - [x] Run the lesson test sweep for labs 00-05
 - [x] Record the lesson test sweep results
@@ -127,6 +129,12 @@ Lesson sweep results
 - Lab 03: pass
 - Lab 04: pass
 - Lab 05: pass
+
+Wallet verification notes
+- `node scripts/setup-wallet-forks.js --dry-run` confirmed the documented sibling-clone layout for both wallet forks.
+- Android wallet: `./gradlew :presentation-feature:testDevDebugUnitTest :app:assembleDevDebug` passed after fixing the iProov callback helper to avoid JVM-test dependence on `android.net.Uri.parse`.
+- iOS wallet: `xcodebuild -project EudiReferenceWallet.xcodeproj -scheme 'EUDI Wallet Dev' -configuration 'Debug Dev' -destination 'id=3997603E-EC7C-402B-8851-73CF1CAD9CF8' build` passed on an arm64 simulator.
+- iOS caveat: the generic `Any iOS Simulator Device` build still fails on x86_64 with `_OBJC_CLASS_$_PodofoWrapper` from the upstream PoDoFo dependency, so the supported classroom path is an arm64 simulator on Apple Silicon or a physical iPhone.
 - [x] Add LAB_ID compatibility handling so Labs 02 and 04 still pass on the integrated branch
 - [x] Verify the lesson sweep after the compatibility fix
 - [x] Commit the lesson compatibility fix

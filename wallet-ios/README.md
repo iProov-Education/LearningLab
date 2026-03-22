@@ -44,6 +44,7 @@ func runIProov(claim: IProovClaim, onResult: @escaping (Bool) -> Void) {
 - Obtain the native claim from your backend at `GET /iproov/claim`.
 - After a successful native SDK run, call `POST /iproov/validate` with the returned `session`.
 - The official iProov iOS SDK requires a physical iPhone; keep the web callback fallback for demo/simulator mode.
+- The current upstream PoDoFo dependency does not support the generic x86_64 simulator link path; use a concrete arm64 simulator destination on Apple Silicon or a physical device.
 - Handle validate/webhook on the server, do not persist images/templates; store only success boolean + audit/reference ID.
 
 ## OHTTP client wrapper

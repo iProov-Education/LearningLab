@@ -71,6 +71,7 @@ The classroom expectation is not "students build iProov from scratch". The class
 - iOS:
   - real iProov credentials + physical iPhone: use the official native iProov iOS SDK
   - demo mode: use the wallet-launched web fallback from `POST /iproov/mobile/claim`
+  - simulator support: use a concrete arm64 simulator destination, not `Any iOS Simulator Device`
 - Android:
   - keep the current wallet gate additive and separate from the browser demo flow
 
@@ -109,6 +110,7 @@ Expected iOS demo fallback:
 Important:
 
 - the official iProov iOS SDK does not run in the simulator; use a physical iPhone for the native path
+- the current upstream PoDoFo dependency fails the generic x86_64 simulator link step with `_OBJC_CLASS_$_PodofoWrapper`; use an arm64 simulator on Apple Silicon or a physical device
 - the browser-based `demo-conductor` path remains the booth/demo flow and must continue to work unchanged
 
 ## Student deliverable boundary
