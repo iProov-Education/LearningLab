@@ -15,11 +15,19 @@ Use `--apply` to make changes.
 ## Setup
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 pnpm install
 ```
 
-Then fill the secrets in `.env`.
+Then fill the secrets in `.env.local`.
+
+`course-ops` auto-loads env files in this order:
+
+- `COURSE_OPS_ENV_FILE` if you point it at an external instructor-only env file
+- `.env.local`
+- `.env`
+
+Both `.env.local` and `.env` are gitignored. Prefer `.env.local` for instructor secrets so the sample `.env.example` stays student-safe.
 
 For short-lived local runs, you can also skip the refresh-token bundle and
 export `GOOGLE_ACCESS_TOKEN` directly, for example:
@@ -31,6 +39,24 @@ node src/cli.mjs import-google-roster --config ../catalog/course.config.example.
 
 That token still needs Google Classroom scopes; an ordinary Cloud SDK token
 without Classroom scopes will be rejected by the API.
+
+For a persistent instructor-only setup, keep the OAuth client JSON local, run:
+
+```bash
+gcloud auth application-default login \
+  --client-id-file=/absolute/path/to/client_secret_<id>.apps.googleusercontent.com.json \
+  --scopes=https://www.googleapis.com/auth/classroom.coursework.students,https://www.googleapis.com/auth/classroom.rosters.readonly,https://www.googleapis.com/auth/classroom.profile.emails,https://www.googleapis.com/auth/classroom.courses.readonly
+```
+
+Then copy the `client_id`, `client_secret`, and `refresh_token` into `.env.local`:
+
+```dotenv
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REFRESH_TOKEN=...
+```
+
+The `refresh_token` is stored in `~/.config/gcloud/application_default_credentials.json` after the ADC login flow completes. If you do not want any secrets inside the repo checkout, store that env file elsewhere and run commands with `COURSE_OPS_ENV_FILE=/absolute/path/to/course-ops.env`.
 
 Workflow scaffolding is included under `.github/workflows/` for manual release and nightly grade sync once this package is promoted into its own repo.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import path from 'node:path'
-import 'dotenv/config'
+import './lib/env.mjs'
 
 import { parseArgs, usage } from './lib/args.mjs'
 import { loadCourseConfig, loadAssignment, buildRepoName, buildRepoDescription } from './lib/catalog.mjs'

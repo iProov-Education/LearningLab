@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import './env.mjs'
 import fs from 'node:fs/promises'
 
 const TOKEN_URL = process.env.GOOGLE_TOKEN_URL || 'https://oauth2.googleapis.com/token'
@@ -7,7 +7,7 @@ const API_BASE = process.env.GOOGLE_CLASSROOM_API_BASE || 'https://classroom.goo
 let cachedAccessToken = null
 let cachedAccessTokenExpiresAt = 0
 
-export async function createGoogleClient() {
+export function createGoogleClient() {
   const accessToken = process.env.GOOGLE_ACCESS_TOKEN
   const clientId = process.env.GOOGLE_CLIENT_ID
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET

@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import './env.mjs'
 
 const API_BASE = process.env.GITHUB_API_URL || 'https://api.github.com'
 

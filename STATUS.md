@@ -157,3 +157,8 @@ Wallet verification notes
 - [x] Replace absolute local markdown links with repo-relative links in the classroom docs
 - [x] Verify the repo build after the markdown link fix
 - [x] Commit the markdown link fix
+- [x] Add instructor-only `course-ops` local env loading for persistent Google credentials
+- [x] Ignore local Google OAuth desktop-client secret files
+- [x] Fix the `course-ops` Google client initialization bug surfaced during roster import
+- [x] Document the instructor-only persistent `course-ops` auth setup
+- [x] Verify the updated `course-ops` tests locally
