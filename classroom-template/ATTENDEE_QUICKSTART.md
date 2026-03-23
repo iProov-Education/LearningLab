@@ -28,12 +28,43 @@ pnpm dev
    - `3002` (`Verifier`)
 7. Open [labs/README-lab-00-start.md](labs/README-lab-00-start.md) and follow Lab 00.
 
+## Alternative path: local terminal
+
+Use this only if GitHub Codespaces is unavailable or a facilitator asks you to switch.
+
+1. Open your GitHub Classroom repo on your own machine.
+2. Install the prerequisites:
+   - macOS: `./scripts/bootstrap-mac.sh`
+   - Windows PowerShell: `powershell -ExecutionPolicy Bypass -File .\\scripts\\bootstrap-windows.ps1`
+3. Create local env files:
+
+```bash
+pnpm env:setup
+```
+
+4. Install dependencies:
+
+```bash
+pnpm install -r --frozen-lockfile
+```
+
+5. Start the lab services:
+
+```bash
+pnpm dev
+```
+
+6. Open:
+   - `http://localhost:3001`
+   - `http://localhost:3002`
+7. Open [labs/README-lab-00-start.md](labs/README-lab-00-start.md) and follow Lab 00.
+
 ## First 10 minutes checklist
 
 - Your GitHub Classroom repo exists under your GitHub account.
-- Your Codespace is running on `main`.
+- Either your Codespace is running on `main` or your local prerequisites are installed.
 - `pnpm dev` is running without errors.
-- You can open both forwarded app ports.
+- You can open both app ports, either through Codespaces forwarding or on `localhost`.
 - You have Lab 00 open in another tab.
 
 ## If you get stuck
@@ -41,6 +72,7 @@ pnpm dev
 - Bring a facilitator your repo URL and the exact terminal error.
 - If the Codespace creation button is unavailable, make sure you are in your own assignment repo, not the starter template.
 - If a port does not open, confirm `pnpm dev` is still running.
+- If local setup fails, stop and switch back to GitHub Codespaces unless a facilitator tells you otherwise.
 
 ## Facilitator support lane
 
@@ -50,4 +82,5 @@ Use this order for quick triage:
 2. Confirm they are in their own assignment repo, not the template repo.
 3. Confirm the Codespace finished booting before they ran anything manually.
 4. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
-5. If the student is still blocked, keep them on Lab 00 and pair them with a facilitator instead of switching them to local setup.
+5. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
+6. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
