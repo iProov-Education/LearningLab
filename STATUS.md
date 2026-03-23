@@ -188,3 +188,7 @@ Wallet verification notes
 - [x] Rename the local git remotes so the active development remote becomes `origin`
 - [x] Verify the renamed remotes and branch tracking configuration locally
 - [x] Commit the remote-rename task tracking update
+- [ ] Move the Village demo conductor guidance out of the student-facing root README
+- [ ] Add a dedicated Village demo conductor runbook
+- [ ] Verify the repo locally after the README/doc split
+- [ ] Commit the Village demo conductor doc split
