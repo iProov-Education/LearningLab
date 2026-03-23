@@ -14,13 +14,10 @@ Your repo and coding environment come from GitHub Classroom and GitHub Codespace
 
 1. Open the GitHub Classroom invite and accept the assignment.
 2. Open the new repository GitHub creates for you.
-3. Open the Codespaces menu.
-   - On most student repos: `Code` -> `Codespaces` -> `Create codespace on main`
-   - On some GitHub views, GitHub shows `Open in a codespace` directly under the green repo action button
+3. Click `Code` -> `Codespaces` -> `Create codespace on main`.
 
-![Open in Codespaces](assets/open_in_codespace.png)
+![Open in Codespaces](assets/student_open_in_codespace.png)
 
-   GitHub can place the Codespaces entry point in slightly different menus, but the action you want is always `Open in a codespace` or `Create codespace on main`.
 4. Wait for the Codespace setup to finish.
    - This repo's dev container already runs `pnpm install -r --frozen-lockfile` and `pnpm env:setup`.
 5. In the Codespaces terminal, run:
@@ -76,8 +73,6 @@ pnpm dev
 ## If you get stuck
 
 - Bring a facilitator your repo URL and the exact terminal error.
-- If the Codespace creation button is unavailable, make sure you are in your own assignment repo, not the starter template.
-- If you only see the screenshot-style menu, choose `Open in a codespace`.
 - If a port does not open, confirm `pnpm dev` is still running.
 - If local setup fails, stop and switch back to GitHub Codespaces unless a facilitator tells you otherwise.
 
@@ -86,8 +81,7 @@ pnpm dev
 Use this order for quick triage:
 
 1. Confirm the student accepted the correct GitHub Classroom invite.
-2. Confirm they are in their own assignment repo, not the template repo.
-3. Confirm the Codespace finished booting before they ran anything manually.
-4. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
-5. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
-6. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
+2. Confirm the Codespace finished booting before they ran anything manually.
+3. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
+4. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
+5. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
