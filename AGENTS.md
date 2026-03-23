@@ -3,7 +3,7 @@
 
 ## Working Rules
 
-- Always `git add` and commit after creating or editing files. Use clear, descriptive commit messages.
+- Always `git add` and commit and push after creating or editing files. Use clear, descriptive commit messages.
 - Verify builds locally before claiming completion for any change.
 - After assessing a request, add or update related tasks in `STATUS.md` before implementation.
 - Keep going without pausing for confirmation; only ask when a decision is blocking progress.
