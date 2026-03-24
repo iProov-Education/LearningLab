@@ -222,4 +222,4 @@ Wallet verification notes
 - [x] Commit and push the Classroom invite update
 - [x] Add the pending repository-invitation step to the attendee onboarding docs
 - [x] Verify the updated attendee docs locally
-- [ ] Commit and push the repository-invitation doc update
+- [x] Commit and push the repository-invitation doc update
