@@ -28,6 +28,8 @@ Your repo and coding environment come from GitHub Classroom and GitHub Codespace
 pnpm dev
 ```
 
+Keep that terminal running. Open a second Codespaces terminal for any `curl` commands from the labs.
+
 If you see `tsx: not found` or `node_modules missing`, run:
 
 ```bash
@@ -86,6 +88,7 @@ pnpm dev
 - Bring a facilitator your repo URL and the exact terminal error.
 - If GitHub shows `Repository Access Issue`, accept the pending repository invitation first.
 - If `pnpm dev` fails with `tsx: not found`, run `pnpm install -r --frozen-lockfile && pnpm env:setup` once, then retry.
+- If the lab asks for `curl` while `pnpm dev` is already running, open a second terminal instead of stopping the dev servers.
 - If the forwarded `app.github.dev` page looks out of date but `http://localhost:3001` works in the codespace, keep going and use the localhost links from the terminal.
 - If a port does not open, confirm `pnpm dev` is still running.
 - If local setup fails, stop and switch back to GitHub Codespaces unless a facilitator tells you otherwise.
