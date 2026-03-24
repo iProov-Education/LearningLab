@@ -1,5 +1,10 @@
 # Status
 
+- [x] Diagnose the iOS wallet repeat-share failure after the first QR presentation succeeds
+- [x] Fix the PIN-entry empty SF Symbol warning in the iOS wallet
+- [x] Fix remote/proximity presentation cleanup so a second scan starts from a clean coordinator state
+- [x] Add regression coverage for the presentation cleanup path
+- [x] Verify the iOS wallet builds after the repeat-share fixes
 - [ ] Diagnose the remaining iOS wallet certificate-chain trust failure against the live verifier
 - [ ] Validate whether the wallet request needs a full x5c chain or different trust-anchor format
 - [ ] Implement the minimal trust-path fix and verify the live wallet flow
