@@ -8,7 +8,7 @@
 - [x] Align the wallet verifier request with the claim names exposed by the EUDI PID wallet
 - [x] Add mdoc PID support to the wallet verifier request
 - [x] Add minimal mdoc `DeviceResponse` inspection for wallet direct-post handling
-- [ ] Verify the live wallet flow with an mdoc PID
+- [x] Verify the live wallet flow with an mdoc PID
 - [x] Tell wallet users to add a PID document first via `EU Form` with name, date of birth, and nationality
 
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
