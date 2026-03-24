@@ -246,4 +246,4 @@ Wallet verification notes
 - [x] Clarify that `pnpm dev` stays running in one terminal while lab checks use a second terminal
 - [x] Keep the source and template startup docs aligned for the multi-terminal workflow
 - [x] Verify the repo still builds after the multi-terminal doc update
-- [ ] Commit and push the multi-terminal doc update
+- [x] Commit and push the multi-terminal doc update
