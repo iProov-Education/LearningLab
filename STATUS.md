@@ -258,6 +258,9 @@ Wallet verification notes
 - [x] Commit and push the runbook-exclusion update
 - [x] Add the missing `// --- Offers, tokens, credentials ---` section marker to the student issuer stub
 - [x] Update the Lab 01 handout so older repos still point students to the right routes
+- [x] Add speaker-note callouts explaining the presentation-flow shortcut in the LAB2 deck
+- [x] Distinguish normal issuer metadata lookups from the demo-specific BBS+iProov callback path in the deck notes
+- [x] Verify the updated deck notes and repo build, then commit and push only the deck and status updates
 - [x] Rebuild the student templates and verify the section marker is present
 - [x] Publish the section-marker update to the starter repos
 - [x] Commit and push the section-marker update
