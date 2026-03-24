@@ -266,4 +266,4 @@ Wallet verification notes
 - [x] Add a student stub hint for generating issuer signing keys at startup
 - [x] Rebuild the student template and verify the JWKS clarification is included
 - [x] Publish the JWKS clarification to the starter repos
-- [ ] Commit and push the JWKS clarification update
+- [x] Commit and push the JWKS clarification update
