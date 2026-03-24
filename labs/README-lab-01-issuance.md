@@ -120,6 +120,47 @@ Example response shape:
 }
 ```
 
+Do not return that example literally.
+
+Those example values are placeholders to show the JSON shape. Your code should:
+
+- generate a fresh UUID for `pre-authorized_code`
+- save that code in memory, together with the requested credential ids and expiry time
+- return the same generated code in the JSON response
+
+So the mental model is:
+
+- the example shows what the response should look like
+- your code decides what the actual UUID is
+- `/token` will only work if you stored that exact UUID first
+
+The minimal implementation shape is:
+
+```ts
+const code = crypto.randomUUID()
+const credentialIds = ['AgeCredential']
+
+offers.set(code, {
+  code,
+  credentials: credentialIds,
+  expiresAt: Date.now() + 10 * 60_000
+})
+
+res.json({
+  credential_offer: {
+    credential_issuer: BASE_URL,
+    credential_configuration_ids: credentialIds,
+    grants: {
+      'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
+        'pre-authorized_code': code,
+        user_pin_required: false
+      }
+    }
+  },
+  expires_in: 600
+})
+```
+
 ### 3. Implement `POST /token`
 
 This route swaps the one-time code for a real access token.

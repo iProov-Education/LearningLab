@@ -58,6 +58,9 @@ app.get('/.well-known/bbs-public-key', (_req: Request, res: Response) => {
 
 // --- Offers, tokens, credentials ---
 
+// Lab 01 hint: do not return the example JSON literally.
+// Generate a fresh UUID code, store it with the requested credential ids + expiry,
+// then return that same generated code inside credential_offer.grants.
 // See labs/README-lab-01-issuance.md for the pre-authorized offer flow and payload.
 app.post('/credential-offers', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 01: implement pre-authorized credential offers')

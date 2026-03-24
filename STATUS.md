@@ -272,3 +272,8 @@ Wallet verification notes
 - [x] Rebuild the student template and verify the import guidance is included
 - [x] Publish the import-guidance update to the starter repos
 - [x] Commit and push the import-guidance update
+- [x] Explain in Lab 01 that the credential offer example must not be hard-coded
+- [x] Add a student stub hint for generating and storing the pre-authorized code
+- [x] Rebuild the student template and verify the credential-offer clarification is included
+- [x] Publish the credential-offer clarification to the starter repos
+- [ ] Commit and push the credential-offer clarification update
