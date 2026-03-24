@@ -5,9 +5,10 @@ Starter repo for the Beyond Compliance learning lab.
 ## Start Here
 
 1. Accept the GitHub Classroom invite shared by the instructors.
-2. Open your new repo in GitHub Codespaces.
-3. Follow [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md).
-4. Start with [labs/README-lab-00-start.md](labs/README-lab-00-start.md).
+2. If GitHub shows a repository invitation, accept it before opening the repo.
+3. Open your new repo in GitHub Codespaces.
+4. Follow [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md).
+5. Start with [labs/README-lab-00-start.md](labs/README-lab-00-start.md).
 
 ## Quickstart
 

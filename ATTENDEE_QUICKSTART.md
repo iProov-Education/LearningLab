@@ -13,23 +13,25 @@ Your repo and coding environment come from GitHub Classroom and GitHub Codespace
 ## Recommended path: GitHub Codespaces
 
 1. Open the GitHub Classroom invite and accept the assignment.
-2. Open the new repository GitHub creates for you.
-3. Click `Code` -> `Codespaces` -> `Create codespace on main`.
+2. If GitHub shows a repository invitation, accept it before continuing.
+   - If you see `Repository Access Issue`, open the repo invitation from GitHub notifications or the repo page and accept it.
+3. Open the new repository GitHub creates for you.
+4. Click `Code` -> `Codespaces` -> `Create codespace on main`.
 
 ![Open in Codespaces](assets/student_open_in_codespace.png)
 
-4. Wait for the Codespace setup to finish.
+5. Wait for the Codespace setup to finish.
    - This repo's dev container already runs `pnpm install -r --frozen-lockfile` and `pnpm env:setup`.
-5. In the Codespaces terminal, run:
+6. In the Codespaces terminal, run:
 
 ```bash
 pnpm dev
 ```
 
-6. Open the forwarded ports for:
+7. Open the forwarded ports for:
    - `3001` (`Issuer`)
    - `3002` (`Verifier`)
-7. Open [labs/README-lab-00-start.md](labs/README-lab-00-start.md) and follow Lab 00.
+8. Open [labs/README-lab-00-start.md](labs/README-lab-00-start.md) and follow Lab 00.
 
 ## Alternative path: local terminal
 
@@ -73,6 +75,7 @@ pnpm dev
 ## If you get stuck
 
 - Bring a facilitator your repo URL and the exact terminal error.
+- If GitHub shows `Repository Access Issue`, accept the pending repository invitation first.
 - If a port does not open, confirm `pnpm dev` is still running.
 - If local setup fails, stop and switch back to GitHub Codespaces unless a facilitator tells you otherwise.
 
@@ -81,7 +84,8 @@ pnpm dev
 Use this order for quick triage:
 
 1. Confirm the student accepted the correct GitHub Classroom invite.
-2. Confirm the Codespace finished booting before they ran anything manually.
-3. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
-4. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
-5. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
+2. Confirm the student accepted any pending repository invitation and no longer sees `Repository Access Issue`.
+3. Confirm the Codespace finished booting before they ran anything manually.
+4. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
+5. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
+6. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
