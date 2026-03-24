@@ -257,4 +257,8 @@ Wallet verification notes
 - [x] Update the Lab 01 handout so older repos still point students to the right routes
 - [x] Rebuild the student templates and verify the section marker is present
 - [x] Publish the section-marker update to the starter repos
-- [ ] Commit and push the section-marker update
+- [x] Commit and push the section-marker update
+- [x] Simplify the Lab 01 handout into a shorter student-first flow
+- [x] Rebuild the student template and verify the simplified Lab 01 handout is included
+- [x] Publish the simplified Lab 01 handout to the starter repos
+- [ ] Commit and push the simplified Lab 01 handout update
