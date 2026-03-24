@@ -85,6 +85,15 @@ pnpm lab:check -- --lab 05 --start --verbose
 LAB_ID=03 pnpm classroom:check
 ```
 
+## Working Answers And Recovery
+
+If you need the instructor-side working answer or want to fast-forward a blocked repo to the known-good implementation for one lesson, use [instructor-cheatsheets/README.md](instructor-cheatsheets/README.md).
+
+The important rule is:
+
+- Lab 00 restores the starter scaffold.
+- Labs 01-05 copy the current integrated working files, then you verify with the matching `LAB_ID` or `pnpm lab:check -- --lab XX`.
+
 ## How `LAB_ID` Changes Behavior
 
 This matters because the integrated `main` branch is not identical to the original lesson branches.

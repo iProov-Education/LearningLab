@@ -41,6 +41,7 @@ ISSUER_BASE_URL=http://127.0.0.1:3101 VERIFIER_BASE_URL=http://127.0.0.1:3102 pn
 - Student template scaffold: `node scripts/scaffold-classroom-template.js --clean`
 - The autograder checks only the active `LAB_ID`.
 - Students do not need to finish one lab before you move them to the next.
+- Instructor-only working answers and the repo fast-forward helper live in `instructor-cheatsheets/README.md`.
 
 ## iProov-Education rollout
 

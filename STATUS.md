@@ -1,5 +1,11 @@
 # Status
 
+- [ ] Diagnose the remaining iOS wallet certificate-chain trust failure against the live verifier
+- [ ] Validate whether the wallet request needs a full x5c chain or different trust-anchor format
+- [ ] Implement the minimal trust-path fix and verify the live wallet flow
+- [ ] Add iOS wallet runtime logging for the workshop trust anchor
+- [ ] Verify the iOS wallet exposes the expected workshop root fingerprint in logs
+
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
 - [x] Update the iOS wallet trust anchor to the workshop CA root
 - [x] Update the Android wallet trust anchor to the workshop CA root
@@ -284,6 +290,11 @@ Wallet verification notes
 - [x] Commit and push the runbook-exclusion update
 - [x] Add the missing `// --- Offers, tokens, credentials ---` section marker to the student issuer stub
 - [x] Update the Lab 01 handout so older repos still point students to the right routes
+- [x] Add instructor-only cheat sheets for Labs 00-05 with usage and recovery guidance
+- [x] Add an instructor-side fast-forward helper that copies the known-good per-lab implementation into a student repo
+- [x] Exclude the cheat-sheet materials from both student-template builders and cover that with tests
+- [x] Verify the new helper, template exclusion, and repo build locally
+- [x] Commit and push the cheat-sheet and fast-forward tooling
 - [x] Add speaker-note callouts explaining the presentation-flow shortcut in the LAB2 deck
 - [x] Distinguish normal issuer metadata lookups from the demo-specific BBS+iProov callback path in the deck notes
 - [x] Verify the updated deck notes and repo build, then commit and push only the deck and status updates

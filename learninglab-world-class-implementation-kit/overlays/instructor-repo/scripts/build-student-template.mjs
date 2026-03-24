@@ -22,6 +22,7 @@ const EXCLUDE_DIRS = new Set([
 
 const EXCLUDE_ROOT_ITEMS = new Set([
   'AGENTS.md',
+  'instructor-cheatsheets',
   'LAB2-W01-Beyond_Compliance_A_Hands-On_Lab_for_Privacy-First_Digital_Identity.key',
   'classroom-template',
   'COURSE_CLASSROOM.md',
