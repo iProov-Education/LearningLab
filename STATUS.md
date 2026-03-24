@@ -3,7 +3,7 @@
 - [ ] Diagnose the remaining iOS wallet certificate-chain trust failure against the live verifier
 - [ ] Validate whether the wallet request needs a full x5c chain or different trust-anchor format
 - [ ] Implement the minimal trust-path fix and verify the live wallet flow
-- [ ] Add iOS wallet runtime logging for the workshop trust anchor
+- [x] Add iOS wallet runtime logging for the workshop trust anchor
 - [ ] Verify the iOS wallet exposes the expected workshop root fingerprint in logs
 
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
