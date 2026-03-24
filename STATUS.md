@@ -306,4 +306,4 @@ Wallet verification notes
 - [x] Add a regression test for student-template wallet doc inclusion and exclusion
 - [x] Rebuild the student template, verify the new wallet lesson, and run tests/build
 - [x] Publish the wallet-doc cleanup to the starter repos
-- [ ] Commit and push the wallet-doc cleanup
+- [x] Commit and push the wallet-doc cleanup
