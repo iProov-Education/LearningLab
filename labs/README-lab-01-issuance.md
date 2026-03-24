@@ -15,6 +15,50 @@ Goal: make the issuer mint one SD-JWT credential, then make the verifier accept 
 - `issuer/src/index.ts`
 - `verifier/src/index.ts`
 
+## Setup the files once
+
+Before you implement the routes, add the missing imports and in-memory state.
+
+### Issuer file setup
+
+Near the top of `issuer/src/index.ts`, you will usually need imports like:
+
+```ts
+import crypto from 'node:crypto'
+import { SignJWT, decodeJwt, exportJWK, generateKeyPair } from 'jose'
+```
+
+You will also need simple in-memory state, for example:
+
+```ts
+const offers = new Map<string, { code: string; credentials: string[]; expiresAt: number }>()
+const accessTokens = new Map<
+  string,
+  {
+    token: string
+    expiresAt: number
+    cNonce: string
+    cNonceExpiresAt: number
+    credentials: string[]
+  }
+>()
+const issued: Record<string, any> = {}
+```
+
+### Verifier file setup
+
+Near the top of `verifier/src/index.ts`, you will usually need imports like:
+
+```ts
+import { createHash } from 'node:crypto'
+import { decodeProtectedHeader, importJWK, jwtVerify } from 'jose'
+```
+
+You will also want somewhere to store:
+
+- the last verified result for `/debug/credential`
+- an optional cached JWKS response
+
 ## What you are building
 
 By the end of this lab, these requests should work in order:
@@ -270,6 +314,51 @@ This route should:
 
 For this lab, focus on the SD-JWT path only.
 
+The easiest way to think about this route is as four checks in order:
+
+1. trust only a saved access token
+2. trust only the latest saved `c_nonce`
+3. build the SD-JWT from the requested claims
+4. save and return the issued credential
+
+The minimal implementation shape is:
+
+```ts
+const auth = req.header('authorization') || ''
+const token = auth.replace(/^Bearer\s+/i, '')
+const tokenState = accessTokens.get(token)
+
+if (!tokenState || tokenState.expiresAt < Date.now()) {
+  return res.status(401).json({ error: 'invalid_token' })
+}
+
+const proofJwt = req.body?.proof?.jwt
+if (!proofJwt) {
+  return res.status(400).json({ error: 'invalid_proof' })
+}
+
+const proofPayload = decodeJwt(proofJwt)
+if (proofPayload.nonce !== tokenState.cNonce) {
+  return res.status(400).json({ error: 'invalid_proof', message: 'c_nonce mismatch' })
+}
+
+const claims = req.body?.claims || {}
+const subject = `did:example:${crypto.randomUUID()}`
+
+// Build disclosures, sign the SD-JWT, and combine it into one credential string.
+// Save the result in `issued` so /debug/issued can show what you minted.
+```
+
+The response should contain real generated values, not placeholders:
+
+- `credentialId`
+- `credential`
+- `sd_jwt`
+- `disclosures`
+- `payload`
+
+If you rotate `c_nonce` after issuing, return the new one too.
+
 ## Part 2: fix the verifier
 
 Open `verifier/src/index.ts`.
@@ -286,6 +375,33 @@ Make the `vc+sd-jwt` branch verify the credential by doing this:
 - rebuild the disclosed claims object
 
 `/debug/credential` should return the last verified payload.
+
+The minimal implementation shape is:
+
+```ts
+const credential = String(body.credential || '')
+const [sdJwt, ...disclosures] = credential.split('~')
+
+const jwks = await fetchJwks()
+const protectedHeader = decodeProtectedHeader(sdJwt)
+const key = jwks.keys.find((k: any) => !protectedHeader.kid || k.kid === protectedHeader.kid)
+
+const { payload } = await jwtVerify(sdJwt, await importJWK(key, 'ES256'))
+
+const claims: Record<string, any> = {}
+for (const disclosure of disclosures) {
+  const decoded = Buffer.from(disclosure, 'base64url').toString('utf8')
+  const [, name, value] = JSON.parse(decoded)
+  claims[name] = value
+}
+```
+
+In plain English:
+
+- split the credential apart
+- trust the JWT only if the issuer JWKS verifies it
+- trust a disclosure only if its hash appears in `_sd`
+- save the final result so `/debug/credential` shows what was verified
 
 ## Part 3: smoke test
 

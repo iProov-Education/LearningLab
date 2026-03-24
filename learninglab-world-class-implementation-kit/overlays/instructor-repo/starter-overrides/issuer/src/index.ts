@@ -5,6 +5,11 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+// Student setup hint:
+// - Lab 01 usually adds `crypto` plus jose imports for key generation, JWT decoding, and signing.
+// - Lab 01 also needs in-memory state such as offers, accessTokens, and issued credentials.
+// - Later labs keep building on this same file with BBS, iProov, and status-list helpers.
+
 const app = express()
 app.use(cors())
 app.use(express.json({ limit: '1mb' }))
@@ -51,7 +56,8 @@ app.get('/.well-known/jwks.json', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 01: publish issuer signing keys')
 })
 
-// See labs/README-lab-02-bbs.md for the BBS public-key endpoint contract.
+// Lab 02 hint: return the issuer BBS public key here so the verifier can check BBS proofs.
+// See labs/README-lab-02-bbs.md for the exact response shape.
 app.get('/.well-known/bbs-public-key', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 02: publish BBS public key')
 })
@@ -73,31 +79,44 @@ app.post('/token', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 01: implement token issuance for the pre-authorized flow')
 })
 
-// See labs/README-lab-01-issuance.md, labs/README-lab-02-bbs.md, labs/README-lab-04-iproov.md, and labs/README-lab-05-revocation.md.
+// Lab 01 hint: validate the Bearer token, decode proof.jwt, check the latest c_nonce,
+// then mint and return the credential.
+// Lab 02 adds the di-bbs branch here.
+// Lab 04 can check the stored iProov session before continuing.
+// Lab 05 adds credentialStatus metadata for revocation.
+// See the lab README files for the current lesson's exact response shape.
 app.post('/credential', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 01/02/04/05: implement issuance, gating, and status')
 })
 
+// Lab 02 hint: accept signature + messages + reveal indexes, then return a derived proof
+// plus the revealedMessages that match those indexes.
 // See labs/README-lab-02-bbs.md for proof derivation inputs and expected output shape.
 app.post('/bbs/proof', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 02: implement or expose the BBS proof helper')
 })
 
+// Lab 04 hint: create a new session id, store it as passed:false, and return the
+// session information the client needs to start iProov.
 // See labs/README-lab-04-iproov.md for claim-session creation and response shape.
 app.get('/iproov/claim', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 04: implement iProov claim session creation')
 })
 
+// Lab 04 hint: update the stored session using the webhook's passed/failed result.
 // See labs/README-lab-04-iproov.md for the webhook payload and pass/fail behavior.
 app.post('/iproov/webhook', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 04: implement iProov webhook handling')
 })
 
+// Lab 05 hint: return the encoded status list JSON for the requested id, or 404 if the id is wrong.
 // See labs/README-lab-05-revocation.md for the Bitstring Status List response format.
 app.get('/statuslist/:id.json', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 05: serve the Bitstring Status List')
 })
 
+// Lab 05 hint: check the admin token, find the issued credential by id, then flip its
+// status-list bit to revoked.
 // See labs/README-lab-05-revocation.md for the revocation mutation and admin-token checks.
 app.post('/revoke/:id', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 05: implement revocation')

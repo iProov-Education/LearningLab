@@ -282,3 +282,10 @@ Wallet verification notes
 - [x] Rebuild the student template and verify the token clarification is included
 - [x] Publish the token clarification to the starter repos
 - [x] Commit and push the token clarification update
+- [x] Rewrite Lab 00 into a simpler student-first checklist
+- [x] Clarify the Lab 01 `/credential` and verifier steps with explicit state and response shapes
+- [x] Rewrite Labs 02–05 into simpler student-first walkthroughs
+- [x] Add matching hint comments to the student issuer/verifier stubs for Labs 01–05
+- [x] Rebuild the student template and verify all simplified lab handouts are included
+- [x] Publish the simplified lab handouts to the starter repos
+- [ ] Commit and push the simplified lab-handout rewrite
