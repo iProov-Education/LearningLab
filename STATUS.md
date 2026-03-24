@@ -232,4 +232,4 @@ Wallet verification notes
 - [x] Document the manual Codespaces recovery command for missing `tsx` or `node_modules`
 - [x] Verify the updated Codespaces setup locally
 - [x] Publish the Codespaces recovery update to the starter repos
-- [ ] Commit and push the Codespaces recovery update
+- [x] Commit and push the Codespaces recovery update
