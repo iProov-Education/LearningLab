@@ -53,6 +53,8 @@ app.get('/.well-known/bbs-public-key', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 02: publish BBS public key')
 })
 
+// --- Offers, tokens, credentials ---
+
 // See labs/README-lab-01-issuance.md for the pre-authorized offer flow and payload.
 app.post('/credential-offers', (_req: Request, res: Response) => {
   return notImplemented(res, 'Lab 01: implement pre-authorized credential offers')

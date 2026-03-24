@@ -15,6 +15,7 @@ Environment tracks
 Steps (edit + test)
 1) Implement issuer offer and token
    - Open `issuer/src/index.ts`, section `// --- Offers, tokens, credentials ---`.
+   - If that exact section marker is missing in an older repo copy, use the `POST /credential-offers`, `POST /token`, and `POST /credential` stubs in the issuer file.
    - `/credential-offers`: accept `{credentials: ["AgeCredential"]}`, create a pre-authorized code (UUID), store with expiry (10 min), respond with `credential_offer` containing `credential_configuration_ids` and the code.
    - `/token`: accept `grant_type = urn:ietf:params:oauth:grant-type:pre-authorized_code`, look up the code, issue `access_token` (UUID) + `c_nonce` (UUID) with expiry (10 min / 5 min), delete the one-time code. If DPoP is off, skip JKT checks.
 2) Implement SD-JWT issuance

@@ -253,3 +253,8 @@ Wallet verification notes
 - [x] Rebuild the student templates and verify the runbook is excluded
 - [x] Publish the runbook-exclusion update to the starter repos
 - [x] Commit and push the runbook-exclusion update
+- [x] Add the missing `// --- Offers, tokens, credentials ---` section marker to the student issuer stub
+- [x] Update the Lab 01 handout so older repos still point students to the right routes
+- [x] Rebuild the student templates and verify the section marker is present
+- [x] Publish the section-marker update to the starter repos
+- [ ] Commit and push the section-marker update
