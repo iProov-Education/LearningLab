@@ -1,5 +1,10 @@
 # Status
 
+- [x] Make the public wallet verifier use a stable x509 reader certificate across restarts
+- [x] Teach the iOS wallet fork to trust the workshop verifier certificate
+- [x] Teach the Android wallet fork to trust the workshop verifier certificate
+- [x] Verify the verifier and wallet fork builds after the workshop certificate updates
+
 - [x] Add the missing `client_id_scheme=pre-registered` fields to the wallet verifier flow
 - [x] Verify the wallet verifier request shape locally with tests
 - [x] Redeploy the public verifier and confirm the live wallet request JWT includes the preregistered client ID scheme
