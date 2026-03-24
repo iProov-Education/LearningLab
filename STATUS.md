@@ -271,4 +271,4 @@ Wallet verification notes
 - [x] Add the missing jose import guidance to the issuer student stub
 - [x] Rebuild the student template and verify the import guidance is included
 - [x] Publish the import-guidance update to the starter repos
-- [ ] Commit and push the import-guidance update
+- [x] Commit and push the import-guidance update
