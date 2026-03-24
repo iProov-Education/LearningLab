@@ -28,7 +28,7 @@
 - [x] Teach the verifier to decode SD-JWT array-element disclosures from wallet presentations
 - [x] Force the public wallet RP request to prefer only the PID mdoc path for now
 - [x] Add verifier regression coverage for the wallet SD-JWT array-disclosure path and mdoc-only request shape
-- [ ] Redeploy the verifier after the wallet SD-JWT and mdoc-path fixes
+- [x] Redeploy the verifier after the wallet SD-JWT and mdoc-path fixes
 
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
 - [x] Update the iOS wallet trust anchor to the workshop CA root
