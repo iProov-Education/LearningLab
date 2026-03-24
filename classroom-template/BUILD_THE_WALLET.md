@@ -12,6 +12,24 @@ Use this guide if your goal is:
 
 If you want the deeper explanation of the patch points, also read [STUDENT_WALLET_RUNBOOK.md](STUDENT_WALLET_RUNBOOK.md).
 
+## What the clone helper actually gives you
+
+`node scripts/setup-wallet-forks.js` does not clone the untouched upstream reference wallets.
+
+It clones the workshop forks:
+
+- `johan-sellstrom/eudi-app-ios-wallet-ui`
+- `johan-sellstrom/eudi-app-android-wallet-ui`
+
+Those forks already contain the iProov presentation-gate work for this lab.
+
+That means:
+
+- you are not expected to add the iProov SDK from scratch
+- you are not expected to create `IProovPresentationGate.swift` or `IProovPresentationGate.kt`
+- you are not expected to invent the `eudi-wallet://iproov` callback handling yourself
+- your job is to point the fork at the workshop backend, run it, and inspect the small number of files that were changed
+
 ## Use your laptop
 
 Do not do this inside GitHub Codespaces.
@@ -76,6 +94,14 @@ Expected layout:
   eudi-app-android-wallet-ui/
 ```
 
+The cloned repos already contain the workshop iProov files.
+
+For example:
+
+- iOS already contains `Modules/feature-presentation/Sources/IProov/IProovPresentationGate.swift`
+- iOS already contains the iProov Swift package wiring
+- Android already contains `presentation-feature/src/main/java/eu/europa/ec/presentationfeature/iproov/IProovPresentationGate.kt`
+
 ## Step 3: build the iOS wallet
 
 Use this path only on macOS with Xcode installed.
@@ -107,6 +133,7 @@ Use this path only on macOS with Xcode installed.
 
 Notes:
 
+- Do not add new iProov source files here. The workshop fork already contains them.
 - Do not use `Any iOS Simulator Device`.
 - For a physical iPhone, you also need your own signing configuration in Xcode.
 - If you use a different backend, replace only the issuer URL and verifier URL values above.
@@ -145,6 +172,8 @@ If you are using a local laptop backend instead of the workshop backend:
 
 - Android emulator issuer URL: `http://10.0.2.2:3001`
 - local verifier URL: the matching `3002` host you are running
+
+Do not add new iProov gate code here. The workshop fork already contains it.
 
 ## Step 5: start the presentation
 

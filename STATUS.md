@@ -218,6 +218,9 @@ Wallet verification notes
 - [x] Update the instructor-only Classroom invite config to the new `iProov-Education` assignment
 - [x] Patch the tracked coursework artifacts to the new Classroom invite and starter repo
 - [x] Verify the updated Classroom payload locally
+- [x] Clarify in the wallet docs that `setup-wallet-forks.js` clones prepatched workshop forks, not the upstream vanilla wallets
+- [x] Make the wallet clone helper say plainly that the cloned repos already contain the iProov gate wiring
+- [x] Verify the wallet-doc clarification in tests and regenerated student templates
 - [x] Add speaker notes to the LAB2 RSAC deck that reflect the current integrated repo
 - [x] Call out repo/codebase differences versus the lesson flow, including components students do not modify in Labs 00-05
 - [x] Verify the deck notes were written successfully, then commit and push only the deck and status updates

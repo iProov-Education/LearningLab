@@ -9,6 +9,30 @@ If you just want the fastest build-and-run path, start with [BUILD_THE_WALLET.md
 The point is not to rebuild the entire wallet.
 The point is to see the small number of patch points that add the iProov gate to an otherwise vanilla wallet.
 
+## What the clone helper actually clones
+
+`node scripts/setup-wallet-forks.js` clones the workshop forks, not the untouched upstream vanilla wallets.
+
+For this workshop, those are:
+
+- `johan-sellstrom/eudi-app-ios-wallet-ui`
+- `johan-sellstrom/eudi-app-android-wallet-ui`
+
+Those forks already contain the iProov gate code and callback handling.
+
+You are not expected to:
+
+- add the iProov SDK from scratch
+- create the gate files from scratch
+- invent the `eudi-wallet://iproov` callback flow yourself
+
+You are expected to:
+
+- clone one workshop fork
+- set the issuer and verifier values
+- run it locally
+- inspect the exact files that were changed
+
 ## Important: use your laptop, not the Codespace
 
 This runbook is for:
@@ -78,6 +102,7 @@ Expected workspace layout:
 Important:
 
 - clone only the platform you need
+- the cloned repo is already the workshop fork with the iProov gate wired in
 - if the script says you are in Codespaces, stop and rerun it from your laptop terminal
 
 ## Step 3: decide which backend URL the wallet should use
@@ -180,7 +205,14 @@ Key files:
 - `eudi-app-ios-wallet-ui/Modules/feature-presentation/Sources/IProov/IProovPresentationGate.swift`
 - `eudi-app-ios-wallet-ui/Modules/logic-ui/Sources/Controller/DeepLinkController.swift`
 
-If you were patching the upstream vanilla wallet, these are the exact places to change:
+The cloned workshop iOS fork already contains:
+
+- the `IProov Enabled` and `IProov Issuer Base URL` keys in `Wallet.plist`
+- `IProovPresentationGate.swift`
+- the `eudi-wallet://iproov` callback handling in `DeepLinkController.swift`
+- the iProov Swift package dependency
+
+Reference only: if you were patching the upstream vanilla wallet yourself, these are the exact places to change:
 
 - `Wallet/Wallet.plist`
   - add the `IProov Enabled` toggle
@@ -233,6 +265,9 @@ Important:
    - `clientId: "verifier.ipid.me"`
    - `verifierApiUri: "https://verifier.ipid.me"`
    - `verifierLegalName: "iProov Verifier"`
+
+Do not create new iProov source files here.
+For the workshop fork, you are only changing configuration values and then running the app.
 
 Use these issuer URLs:
 
@@ -291,7 +326,13 @@ Key files:
 - `eudi-app-android-wallet-ui/presentation-feature/src/main/java/eu/europa/ec/presentationfeature/iproov/IProovPresentationGate.kt`
 - `eudi-app-android-wallet-ui/presentation-feature/src/main/java/eu/europa/ec/presentationfeature/ui/loading/PresentationLoadingViewModel.kt`
 
-If you were patching the upstream vanilla wallet, these are the exact places to change:
+The cloned workshop Android fork already contains:
+
+- `presentation-feature/.../IProovPresentationGate.kt`
+- the `eudi-wallet://iproov` callback path
+- the presentation-loading hook that pauses until the iProov step completes
+
+Reference only: if you were patching the upstream vanilla wallet yourself, these are the exact places to change:
 
 - `WalletCoreConfigImpl.kt`
   - add `ClientIdScheme.Preregistered(...)`
@@ -336,6 +377,9 @@ Expected callback URL:
 5. Make sure:
    - `IPROOV_GATE_ENABLED` is `true`
    - `IPROOV_ISSUER_BASE_URL` is the exact issuer URL from Step 3
+
+Do not add new iProov gate code here.
+For the workshop fork, you are only setting config values and then running the app.
 
 Use these issuer URLs:
 

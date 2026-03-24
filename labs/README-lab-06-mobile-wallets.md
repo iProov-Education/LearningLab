@@ -22,6 +22,9 @@ You are identifying the exact places where a vanilla wallet needs an iProov gate
 The workshop wallet forks already contain those changes.
 Your job is to run one fork locally and inspect the small set of files that differ from the vanilla wallet.
 
+`node scripts/setup-wallet-forks.js` clones the workshop forks, not the untouched upstream vanilla wallets.
+You are not expected to add the iProov SDK or invent the gate from scratch in this lab.
+
 ## Important: this lab is laptop-only
 
 Do not try to run the wallet track entirely inside GitHub Codespaces.
@@ -77,6 +80,7 @@ node scripts/setup-wallet-forks.js --dry-run
 What this does:
 
 - clones the chosen wallet beside `LearningLab`
+- clones the workshop fork with the iProov gate already wired
 - keeps the mobile repo separate from the Node lab repo
 - avoids submodules and nested repos
 
