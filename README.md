@@ -46,7 +46,6 @@ Local terminal fallback:
 Student docs:
 
 - Quick start: [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md)
-- Lesson guide: [LESSON_RUNBOOK.md](LESSON_RUNBOOK.md)
 - Mobile wallet runbook: [STUDENT_WALLET_RUNBOOK.md](STUDENT_WALLET_RUNBOOK.md)
 - Mobile wallet repo layout: [WALLET_FORKS.md](WALLET_FORKS.md)
 - Deeper technical reference: [TECHNICAL_REFERENCE.md](TECHNICAL_REFERENCE.md)

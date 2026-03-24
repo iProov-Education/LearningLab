@@ -23,6 +23,7 @@ const EXCLUDE_DIRS = new Set([
 const EXCLUDE_ROOT_ITEMS = new Set([
   'AGENTS.md',
   'classroom-template',
+  'LESSON_RUNBOOK.md',
   'learninglab-world-class-implementation-kit',
   'STATUS.md'
 ])

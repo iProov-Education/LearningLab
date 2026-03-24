@@ -247,3 +247,9 @@ Wallet verification notes
 - [x] Keep the source and template startup docs aligned for the multi-terminal workflow
 - [x] Verify the repo still builds after the multi-terminal doc update
 - [x] Commit and push the multi-terminal doc update
+- [x] Keep `LESSON_RUNBOOK.md` out of the generated student repos
+- [x] Remove the student-facing README link to the instructor lesson runbook
+- [x] Add explicit per-stub pointers to the matching lab README in the student overrides
+- [x] Rebuild the student templates and verify the runbook is excluded
+- [x] Publish the runbook-exclusion update to the starter repos
+- [ ] Commit and push the runbook-exclusion update
