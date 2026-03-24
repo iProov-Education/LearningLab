@@ -227,3 +227,9 @@ Wallet verification notes
 - [x] Rebuild the generated student template and verify the student-facing root README
 - [x] Publish the corrected root README to the starter repo and current Classroom assignment source repo
 - [x] Commit and push the starter README fix
+- [x] Harden Codespaces startup so a missed install self-recovers on first attach
+- [x] Add a unit test for the Codespaces readiness checks
+- [x] Document the manual Codespaces recovery command for missing `tsx` or `node_modules`
+- [x] Verify the updated Codespaces setup locally
+- [x] Publish the Codespaces recovery update to the starter repos
+- [ ] Commit and push the Codespaces recovery update

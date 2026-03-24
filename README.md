@@ -17,6 +17,7 @@ Most students only need GitHub Classroom, GitHub Codespaces, and the lab docs be
 Recommended path:
 
 - Use GitHub Codespaces and follow [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md).
+- If `pnpm dev` reports `tsx: not found`, run `pnpm install -r --frozen-lockfile && pnpm env:setup`, then retry.
 
 Local terminal fallback:
 

@@ -15,6 +15,7 @@ Starter repo for the Beyond Compliance learning lab.
 Recommended path:
 
 - Use GitHub Codespaces and follow [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md).
+- If `pnpm dev` reports `tsx: not found`, run `pnpm install -r --frozen-lockfile && pnpm env:setup`, then retry.
 
 Local terminal fallback:
 

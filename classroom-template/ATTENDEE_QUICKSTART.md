@@ -28,6 +28,13 @@ Your repo and coding environment come from GitHub Classroom and GitHub Codespace
 pnpm dev
 ```
 
+If you see `tsx: not found` or `node_modules missing`, run:
+
+```bash
+pnpm install -r --frozen-lockfile && pnpm env:setup
+pnpm dev
+```
+
 7. Open the forwarded ports for:
    - `3001` (`Issuer`)
    - `3002` (`Verifier`)
@@ -76,6 +83,7 @@ pnpm dev
 
 - Bring a facilitator your repo URL and the exact terminal error.
 - If GitHub shows `Repository Access Issue`, accept the pending repository invitation first.
+- If `pnpm dev` fails with `tsx: not found`, run `pnpm install -r --frozen-lockfile && pnpm env:setup` once, then retry.
 - If a port does not open, confirm `pnpm dev` is still running.
 - If local setup fails, stop and switch back to GitHub Codespaces unless a facilitator tells you otherwise.
 
@@ -86,6 +94,7 @@ Use this order for quick triage:
 1. Confirm the student accepted the correct GitHub Classroom invite.
 2. Confirm the student accepted any pending repository invitation and no longer sees `Repository Access Issue`.
 3. Confirm the Codespace finished booting before they ran anything manually.
-4. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
-5. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
-6. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
+4. If `pnpm dev` reports missing `tsx` or `node_modules`, run `pnpm install -r --frozen-lockfile && pnpm env:setup`, then retry.
+5. Confirm `pnpm dev` is running and ports `3001` and `3002` are forwarded.
+6. If Codespaces is unavailable, move them to the local terminal path and keep them on Lab 00.
+7. If the student is still blocked, pair them with a facilitator instead of improvising a different setup path.
