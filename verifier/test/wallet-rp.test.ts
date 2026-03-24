@@ -7,17 +7,18 @@ import {
   normalizeWalletDirectPostBody
 } from '../src/wallet-rp.ts'
 
-test('createWalletSession builds a preregistered deep link for the public verifier', () => {
+test('createWalletSession builds an x509 SAN DNS deep link for the public verifier', () => {
   const session = createWalletSession('https://verifier.ipid.me', Date.UTC(2026, 2, 23, 12, 0, 0))
 
   assert.equal(session.clientId, 'verifier.ipid.me')
+  assert.equal(session.requestClientId, 'x509_san_dns:verifier.ipid.me')
   assert.equal(session.legalName, 'iProov Verifier')
   assert.match(session.requestUri, /^https:\/\/verifier\.ipid\.me\/wallet\/request\.jwt\//)
   assert.match(session.responseUri, /^https:\/\/verifier\.ipid\.me\/wallet\/direct_post\//)
   assert.match(session.resultUri, /^https:\/\/verifier\.ipid\.me\/wallet\/session\//)
   assert.match(
     session.deepLink,
-    /^eudi-openid4vp:\/\/verifier\.ipid\.me\?client_id=verifier\.ipid\.me&client_id_scheme=pre-registered&request_uri=https%3A%2F%2Fverifier\.ipid\.me%2Fwallet%2Frequest\.jwt%2F/
+    /^eudi-openid4vp:\/\/verifier\.ipid\.me\?client_id=x509_san_dns%3Averifier\.ipid\.me&client_id_scheme=x509_san_dns&request_uri=https%3A%2F%2Fverifier\.ipid\.me%2Fwallet%2Frequest\.jwt%2F/
   )
 })
 
@@ -25,8 +26,8 @@ test('buildWalletRequestObject asks for over-21 plus nationality with a fallback
   const session = createWalletSession('https://verifier.ipid.me')
   const request = buildWalletRequestObject(session)
 
-  assert.equal(request.client_id, 'verifier.ipid.me')
-  assert.equal(request.client_id_scheme, 'pre-registered')
+  assert.equal(request.client_id, 'x509_san_dns:verifier.ipid.me')
+  assert.equal(request.client_id_scheme, 'x509_san_dns')
   assert.equal(request.response_uri, session.responseUri)
   assert.equal(request.response_type, 'vp_token')
   assert.equal(request.response_mode, 'direct_post')
