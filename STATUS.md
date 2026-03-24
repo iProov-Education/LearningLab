@@ -293,4 +293,4 @@ Wallet verification notes
 - [x] Update example env docs so IPROOV_SECRET is the primary real-credentials path
 - [x] Rebuild the student template and verify the iProov env clarification is included
 - [x] Publish the iProov env clarification to the starter repos
-- [ ] Commit and push the iProov env clarification update
+- [x] Commit and push the iProov env clarification update
