@@ -18,6 +18,7 @@ import {
 } from 'jose'
 import { z } from 'zod'
 import { base64ToBytes, bytesToBase64, deriveProof, generateBbsKeypair, signMessages } from 'bbs-lib'
+import { renderIssuerLandingPage } from './landing-page.js'
 
 dotenv.config()
 
@@ -120,6 +121,17 @@ function notImplemented(res: Response, message: string) {
 }
 
 // --- Metadata ---
+
+app.get('/', (_req: Request, res: Response) => {
+  res.setHeader('content-type', 'text/html').send(
+    renderIssuerLandingPage({
+      statusListId: STATUS_LIST_ID,
+      demoMode: DEMO_MODE,
+      useOhttp: USE_OHTTP,
+      ohttpRelayUrl: OHTTP_RELAY_URL
+    })
+  )
+})
 
 app.get('/.well-known/openid-credential-issuer', (_req: Request, res: Response) => {
   res.json({

@@ -233,3 +233,9 @@ Wallet verification notes
 - [x] Verify the updated Codespaces setup locally
 - [x] Publish the Codespaces recovery update to the starter repos
 - [x] Commit and push the Codespaces recovery update
+- [x] Add a student-friendly issuer landing page instead of `Cannot GET /`
+- [x] Add a unit test for the issuer landing page content
+- [x] Update attendee docs so port-opening expectations match the app routes
+- [x] Verify the issuer landing page and docs locally
+- [x] Publish the issuer landing-page update to the starter repos
+- [ ] Commit and push the issuer landing-page update
