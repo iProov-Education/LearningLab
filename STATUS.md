@@ -226,4 +226,4 @@ Wallet verification notes
 - [x] Stop the internal starter-overrides README from replacing the student repo root README
 - [x] Rebuild the generated student template and verify the student-facing root README
 - [x] Publish the corrected root README to the starter repo and current Classroom assignment source repo
-- [ ] Commit and push the starter README fix
+- [x] Commit and push the starter README fix
