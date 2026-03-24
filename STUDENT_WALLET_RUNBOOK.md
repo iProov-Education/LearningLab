@@ -4,6 +4,8 @@ This is the optional mobile-wallet track for students who have already finished 
 
 Use this runbook to connect one of the external wallet forks to a reachable `LearningLab` backend.
 
+If you just want the fastest build-and-run path, start with [BUILD_THE_WALLET.md](BUILD_THE_WALLET.md).
+
 The point is not to rebuild the entire wallet.
 The point is to see the small number of patch points that add the iProov gate to an otherwise vanilla wallet.
 

@@ -151,17 +151,22 @@ If you are using your own backend instead of the workshop backend, open that ver
 
 ## Step 6: follow the platform runbook
 
-After cloning the wallet, open:
+After cloning the wallet, open these in order:
 
+- [BUILD_THE_WALLET.md](../BUILD_THE_WALLET.md)
 - [STUDENT_WALLET_RUNBOOK.md](../STUDENT_WALLET_RUNBOOK.md)
 
-Use that runbook for:
+Use the build guide for:
+
+- the shortest path to getting one wallet running
+- exact Xcode and Android Studio setup steps
+- the workshop issuer/verifier URLs
+- the verifier preregistration values
+
+Use the runbook for:
 
 - platform-specific file locations
 - the exact vanilla-wallet patch points to inspect
-- iOS and Android setup
-- where to paste the issuer base URL
-- where to paste the verifier preregistration values
 - expected iProov flow
 - troubleshooting
 

@@ -266,6 +266,9 @@ Wallet verification notes
 - [x] Add verifier tests for the wallet RP request/session helpers
 - [x] Update the wallet/student docs to point at the public RP URLs and preregistered verifier settings
 - [x] Verify the wallet RP flow locally and redeploy it to the public VM
+- [x] Add one student-facing wallet build guide inside `LearningLab`
+- [x] Point the wallet lab docs and runbook at the single build guide
+- [x] Verify the repo still builds after the wallet-doc simplification
 - [x] Simplify the Lab 01 handout into a shorter student-first flow
 - [x] Rebuild the student template and verify the simplified Lab 01 handout is included
 - [x] Publish the simplified Lab 01 handout to the starter repos

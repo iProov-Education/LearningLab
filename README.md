@@ -48,5 +48,6 @@ Local terminal fallback:
 Student docs:
 
 - Quick start: [ATTENDEE_QUICKSTART.md](ATTENDEE_QUICKSTART.md)
+- Wallet build guide: [BUILD_THE_WALLET.md](BUILD_THE_WALLET.md)
 - Optional mobile wallet runbook: [STUDENT_WALLET_RUNBOOK.md](STUDENT_WALLET_RUNBOOK.md) for local terminal + Xcode/Android Studio
 - Deeper technical reference: [TECHNICAL_REFERENCE.md](TECHNICAL_REFERENCE.md)
