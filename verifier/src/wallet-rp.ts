@@ -3,10 +3,33 @@ import QRCode from 'qrcode'
 
 const SESSION_TTL_MS = 15 * 60_000
 const QR_SIZE = 280
-const EUDI_PID_VCTS = ['urn:eudi:pid:1']
+const EUDI_PID_SD_JWT_VCTS = ['urn:eudi:pid:1']
+const EUDI_PID_MDOC_DOCTYPE = 'eu.europa.ec.eudi.pid.1'
+const EUDI_PID_MDOC_NAMESPACE = EUDI_PID_MDOC_DOCTYPE
 const X509_SAN_DNS_CLIENT_ID_SCHEME = 'x509_san_dns'
 const PID_BIRTHDATE_CLAIMS = ['birthdate', 'birth_date'] as const
 const PID_NATIONALITY_CLAIMS = ['nationalities', 'nationality'] as const
+
+type WalletClaimQuery = {
+  id: string
+  path: string[]
+}
+
+type SdJwtWalletCredentialQuery = {
+  id: string
+  format: 'dc+sd-jwt'
+  meta: { vct_values: string[] }
+  claims: WalletClaimQuery[]
+}
+
+type MdocWalletCredentialQuery = {
+  id: string
+  format: 'mso_mdoc'
+  meta: { doctype_value: string }
+  claims: WalletClaimQuery[]
+}
+
+type WalletCredentialQuery = SdJwtWalletCredentialQuery | MdocWalletCredentialQuery
 
 export type WalletVerifierProfile = {
   baseUrl: string
@@ -66,12 +89,7 @@ export type WalletRequestObject = {
   nonce: string
   state: string
   dcql_query: {
-    credentials: Array<{
-      id: string
-      format: string
-      meta: { vct_values: string[] }
-      claims: Array<{ id: string; path: string[] }>
-    }>
+    credentials: WalletCredentialQuery[]
     credential_sets: Array<{
       options: string[][]
       purpose?: string
@@ -83,6 +101,7 @@ export type WalletRequestObject = {
         'sd-jwt_alg_values': string[]
         'kb-jwt_alg_values': string[]
       }
+      'mso_mdoc': Record<string, never>
     }
   }
 }
@@ -147,7 +166,8 @@ export function buildWalletRequestObject(session: WalletRpSession, walletNonce?:
         'dc+sd-jwt': {
           'sd-jwt_alg_values': ['ES256'],
           'kb-jwt_alg_values': ['ES256']
-        }
+        },
+        'mso_mdoc': {}
       }
     },
     ...(walletNonce ? { wallet_nonce: walletNonce } : {})
@@ -155,11 +175,11 @@ export function buildWalletRequestObject(session: WalletRpSession, walletNonce?:
 }
 
 export function buildWalletDcqlQuery() {
-  const pidBirthdateVariants = PID_BIRTHDATE_CLAIMS.flatMap((birthdateClaim) =>
+  const pidBirthdateVariants: SdJwtWalletCredentialQuery[] = PID_BIRTHDATE_CLAIMS.flatMap((birthdateClaim) =>
     PID_NATIONALITY_CLAIMS.map((nationalityClaim) => ({
       id: `pid-${birthdateClaim}-and-${nationalityClaim}`,
-      format: 'dc+sd-jwt',
-      meta: { vct_values: EUDI_PID_VCTS },
+      format: 'dc+sd-jwt' as const,
+      meta: { vct_values: EUDI_PID_SD_JWT_VCTS },
       claims: [
         { id: birthdateClaim, path: [birthdateClaim] },
         { id: nationalityClaim, path: [nationalityClaim] }
@@ -167,27 +187,50 @@ export function buildWalletDcqlQuery() {
     }))
   )
 
+  const pidMdocVariants: WalletCredentialQuery[] = [
+    {
+      id: 'pid-mdoc-age-over-21-and-nationality',
+      format: 'mso_mdoc',
+      meta: { doctype_value: EUDI_PID_MDOC_DOCTYPE },
+      claims: [
+        { id: 'age_over_21', path: [EUDI_PID_MDOC_NAMESPACE, 'age_over_21'] },
+        { id: 'nationality', path: [EUDI_PID_MDOC_NAMESPACE, 'nationality'] }
+      ]
+    },
+    {
+      id: 'pid-mdoc-birth_date-and-nationality',
+      format: 'mso_mdoc',
+      meta: { doctype_value: EUDI_PID_MDOC_DOCTYPE },
+      claims: [
+        { id: 'birth_date', path: [EUDI_PID_MDOC_NAMESPACE, 'birth_date'] },
+        { id: 'nationality', path: [EUDI_PID_MDOC_NAMESPACE, 'nationality'] }
+      ]
+    }
+  ]
+
   return {
     credentials: [
       {
         id: 'pid-age-over-21-and-nationality',
-        format: 'dc+sd-jwt',
-        meta: { vct_values: EUDI_PID_VCTS },
+        format: 'dc+sd-jwt' as const,
+        meta: { vct_values: EUDI_PID_SD_JWT_VCTS },
         claims: [
           { id: 'age_over_21', path: ['age_over_21'] },
           { id: 'nationality', path: ['nationality'] }
         ]
       },
-      ...pidBirthdateVariants
+      ...pidBirthdateVariants,
+      ...pidMdocVariants
     ],
     credential_sets: [
       {
         options: [
           ['pid-age-over-21-and-nationality'],
-          ...pidBirthdateVariants.map((credential) => [credential.id])
+          ...pidBirthdateVariants.map((credential) => [credential.id]),
+          ...pidMdocVariants.map((credential) => [credential.id])
         ],
         purpose:
-          'Accept a PID credential that either exposes age_over_21 directly or exposes birth date plus nationality so the verifier can derive the over-21 decision locally.'
+          'Accept either a PID SD-JWT VC or a PID mdoc. If the credential exposes birth date instead of age_over_21, the verifier derives the over-21 decision locally.'
       }
     ]
   }
@@ -253,14 +296,15 @@ export function extractPresentedCredentials(vpToken: unknown): string[] {
     const tokenRecord = vpToken as Record<string, unknown>
     if (typeof tokenRecord.credential === 'string') return [tokenRecord.credential]
     if (typeof tokenRecord.sd_jwt === 'string') return [tokenRecord.sd_jwt]
+    return Object.values(tokenRecord).flatMap((item) => extractPresentedCredentials(item))
   }
   return []
 }
 
 export function renderWalletSessionPage(session: WalletRpSession, qrSvg: string) {
   const requestedClaims = [
-    'Primary: age_over_21 + nationality from a PID SD-JWT VC',
-    'Fallback: PID birthdate/birth_date + nationality/nationalities, with the over-21 decision derived by the verifier'
+    'PID (SD-JWT VC): age_over_21 + nationality, or birthdate/birth_date + nationality/nationalities',
+    'PID (MSO mdoc): age_over_21 + nationality, or birth_date + nationality under the PID namespace'
   ]
   const statusCopy =
     session.outcome.status === 'pending'
@@ -376,7 +420,7 @@ export function renderWalletSessionPage(session: WalletRpSession, qrSvg: string)
       <span class="pill">Wallet RP Session</span>
       <h1>Scan This QR Code With The Wallet</h1>
       <p>${escapeHtml(statusCopy)}</p>
-      <p>This verifier asks for proof that the holder is over 21 and for nationality. If the PID exposes birth date instead of <code>age_over_21</code>, the verifier derives the over-21 result locally after receiving the presentation.</p>
+      <p>This verifier accepts either a PID SD-JWT VC or a PID mdoc and asks for proof that the holder is over 21 plus nationality. If the credential exposes birth date instead of <code>age_over_21</code>, the verifier derives the over-21 result locally after receiving the presentation.</p>
     </section>
     <section class="grid">
       <article class="card">

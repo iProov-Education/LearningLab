@@ -14,6 +14,7 @@ import { base64ToBytes, verifyProof as verifyBbsProof } from 'bbs-lib'
 import { assertPassedIProovSession } from './iproov.js'
 import { shouldRequireIProovForBbsVerification } from './lab-compat.js'
 import { buildVpRequest } from './vp-request.js'
+import { inspectMdocCredential, looksLikeMdocDeviceResponse } from './wallet-mdoc.js'
 import { createWalletRequestSigner, signWalletRequestObject } from './wallet-request-signing.js'
 import {
   buildWalletRequestObject,
@@ -311,7 +312,7 @@ async function evaluateWalletDirectPost(session: WalletRpSession, body: WalletDi
     }
   }
 
-  const result = await inspectWalletCredential(credentials[0], {
+  const result = await inspectWalletPresentation(credentials[0], {
     expectedAudience: session.clientId,
     expectedNonce: session.nonce
   })
@@ -325,7 +326,12 @@ async function evaluateWalletDirectPost(session: WalletRpSession, body: WalletDi
     receivedAt,
     mode: result.mode,
     issuer: typeof result.payload?.iss === 'string' ? result.payload.iss : undefined,
-    vct: typeof result.payload?.vct === 'string' ? result.payload.vct : undefined,
+    vct:
+      typeof result.payload?.vct === 'string'
+        ? result.payload.vct
+        : typeof result.payload?.docType === 'string'
+          ? result.payload.docType
+          : undefined,
     claims: summarizedClaims.claims,
     kbJwt: result.keyBinding ?? null,
     payload: result.payload,
@@ -335,14 +341,26 @@ async function evaluateWalletDirectPost(session: WalletRpSession, body: WalletDi
   }
 }
 
-async function inspectWalletCredential(
+async function inspectWalletPresentation(
   credential: string,
   options: { expectedAudience?: string; expectedNonce?: string }
 ) {
+  if (looksLikeMdocDeviceResponse(credential)) {
+    return {
+      ...inspectMdocCredential(credential),
+      mode: 'inspected' as const
+    }
+  }
   try {
     const verified = await verifySdJwtCredential(credential, options)
     return { ...verified, mode: 'verified' as const }
   } catch (error: any) {
+    if (looksLikeMdocDeviceResponse(credential)) {
+      return {
+        ...inspectMdocCredential(credential),
+        mode: 'inspected' as const
+      }
+    }
     const inspected = inspectSdJwtCredential(credential)
     return {
       ...inspected,
