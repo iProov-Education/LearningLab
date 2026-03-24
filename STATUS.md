@@ -298,4 +298,4 @@ Wallet verification notes
 - [x] Update the template-facing Lab 04 copy to match the Codespaces-only setup
 - [x] Rebuild the student template and verify the Codespaces-only iProov wording is included
 - [x] Publish the Codespaces-only iProov wording to the starter repos
-- [ ] Commit and push the Codespaces-only iProov wording update
+- [x] Commit and push the Codespaces-only iProov wording update
