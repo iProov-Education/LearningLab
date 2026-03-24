@@ -31,6 +31,7 @@ test('build-student-template keeps student wallet docs but excludes instructor-o
     await assertPathExists(path.join(outDir, 'STUDENT_WALLET_RUNBOOK.md'))
     await assertPathExists(path.join(outDir, 'WORKING_SOLUTIONS.md'))
     await assertPathExists(path.join(outDir, 'scripts', 'fast-forward-student-lab.js'))
+    await assertPathExists(path.join(outDir, 'scripts', 'build-take-home-bundle.js'))
 
     await assertPathMissing(path.join(outDir, 'WALLET_FORKS.md'))
     await assertPathMissing(path.join(outDir, 'VILLAGE_DEMO_CONDUCTOR.md'))

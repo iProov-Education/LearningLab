@@ -39,10 +39,51 @@ ISSUER_BASE_URL=http://127.0.0.1:3101 VERIFIER_BASE_URL=http://127.0.0.1:3102 pn
 
 - Workflow file: `.github/workflows/classroom.yml`
 - Student template scaffold: `node scripts/scaffold-classroom-template.js --clean`
+- End-of-session take-home zip: `pnpm take-home:bundle`
 - The autograder checks only the active `LAB_ID`.
 - Students do not need to finish one lab before you move them to the next.
 - Instructor-only annotated answers live in `instructor-cheatsheets/README.md`.
 - Student-facing fast-forward and peek instructions live in `WORKING_SOLUTIONS.md` and are intentionally included in the classroom template.
+
+## End-of-session take-home bundle
+
+Run this from the instructor repo when you want a downloadable, student-safe zip of the working project:
+
+```bash
+pnpm take-home:bundle
+```
+
+Default output:
+
+- directory: `dist/take-home/LearningLab-working-project/`
+- zip: `dist/take-home/LearningLab-working-project.zip`
+
+What it includes:
+
+- the current integrated working repo state from `main`
+- student-safe docs such as `WORKING_SOLUTIONS.md`, wallet guides, and lab handouts
+- tests and scripts so attendees can keep building on top of the repo
+
+What it excludes:
+
+- `instructor-cheatsheets/`
+- `COURSE_CLASSROOM.md`, `LESSON_RUNBOOK.md`, and `STATUS.md`
+- the Keynote deck, wallet fork placeholders, GitHub Classroom workflow, and secret/env files
+- local/generated artifacts such as `dist/` and `node_modules/`
+
+Useful variants:
+
+```bash
+node scripts/build-take-home-bundle.js --name RSA-LearningLab-Take-Home
+node scripts/build-take-home-bundle.js --out ./dist/conference-handoff
+node scripts/build-take-home-bundle.js --no-zip
+```
+
+Recommended handoff:
+
+- upload the zip to a stable URL such as GitHub Releases, Google Drive, or your event site
+- put that direct download URL into the final slide QR code or chat message
+- keep the Classroom starter repo for the exercise, and use the take-home zip only for the post-session handoff
 
 ## iProov-Education rollout
 

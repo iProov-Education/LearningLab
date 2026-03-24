@@ -1,5 +1,8 @@
 # Status
 
+- [x] Add a student-safe take-home bundle export for the integrated working repo
+- [x] Verify the take-home bundle excludes instructor-only material and includes the working implementation
+- [x] Document how to generate and hand out the take-home zip at the end of the session
 - [x] QA the student-facing Learning Lab instructions for conference use
 - [x] Verify whether students can see solution material in the student-facing repo/template
 - [x] Run the full unit and smoke-test sweep for the Learning Lab repo
