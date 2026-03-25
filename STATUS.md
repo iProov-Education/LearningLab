@@ -29,6 +29,9 @@
 - [x] Force the public wallet RP request to prefer only the PID mdoc path for now
 - [x] Add verifier regression coverage for the wallet SD-JWT array-disclosure path and mdoc-only request shape
 - [x] Redeploy the verifier after the wallet SD-JWT and mdoc-path fixes
+- [x] Make the completed wallet verifier page show a prominent human-readable result above the fold
+- [x] Add wallet RP regression coverage for the human-readable completion page
+- [ ] Redeploy the verifier after the wallet result-page update
 
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
 - [x] Update the iOS wallet trust anchor to the workshop CA root

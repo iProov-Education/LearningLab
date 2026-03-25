@@ -6,6 +6,7 @@ import {
   extractPresentedCredentials,
   normalizeWalletDirectPostBody,
   pickFirstSuccessfulWalletPresentation,
+  renderWalletSessionPage,
   summarizeWalletClaims
 } from '../src/wallet-rp.ts'
 
@@ -117,4 +118,37 @@ test('pickFirstSuccessfulWalletPresentation throws a stable error when every can
     }),
     /unsupported:bad-one/
   )
+})
+
+test('renderWalletSessionPage shows a prominent human-readable summary for completed sessions', () => {
+  const session = createWalletSession('https://verifier.ipid.me', Date.UTC(2026, 2, 24, 15, 0, 0))
+  session.outcome = {
+    status: 'complete',
+    mode: 'inspected',
+    vct: 'eu.europa.ec.eudi.pid.1',
+    claims: {
+      nationality: 'SE',
+      birth_date: '1963-04-30',
+      nationalities: ['SE'],
+      birthdate: '1963-04-30',
+      age_over_21: true,
+      age_over_21_source: 'derived_from_birthdate'
+    },
+    payload: {
+      format: 'mso_mdoc',
+      docType: 'eu.europa.ec.eudi.pid.1'
+    },
+    kbJwt: null,
+    warning: 'mdoc inspection only | age_over_21 derived from PID birthdate'
+  }
+
+  const html = renderWalletSessionPage(session, '<svg></svg>')
+
+  assert.match(html, /Successful Authentication/)
+  assert.match(html, /Successful authentication/)
+  assert.match(html, /Over 21/)
+  assert.match(html, /Sweden \(SE\)/)
+  assert.match(html, /1963-04-30/)
+  assert.match(html, /Technical details/)
+  assert.doesNotMatch(html, /<h2>Latest Result<\/h2>/)
 })
