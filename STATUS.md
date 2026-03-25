@@ -1,5 +1,9 @@
 # Status
 
+- [x] Diagnose the fresh-checkout Codespaces `pnpm dev` failure for unresolved `bbs-lib`
+- [x] Fix workspace startup so `pnpm dev` builds `bbs-lib` automatically before launching services
+- [x] Verify `pnpm dev` starts cleanly from a clean state without a prebuilt `bbs-lib/dist`
+
 - [x] Add explicit starter-repo propagation rules to `AGENTS.md`
 - [x] Add a student-safe take-home bundle export for the integrated working repo
 - [x] Verify the take-home bundle excludes instructor-only material and includes the working implementation
