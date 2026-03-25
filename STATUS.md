@@ -1,5 +1,11 @@
 # Status
 
+- [x] Diagnose why `fast-forward-student-lab.js --target .` fails in student repos despite the student docs recommending it
+- [x] Bundle the minimal working-solution snapshots needed for student self fast-forward
+- [x] Fix the fast-forward helper to use bundled snapshots in student repos and keep instructor-repo safeguards
+- [x] Add regression coverage for student self fast-forward and template bundling
+- [x] Verify the fast-forward flow and template generation locally
+
 - [x] Diagnose the fresh-checkout Codespaces `pnpm dev` failure for unresolved `bbs-lib`
 - [x] Fix workspace startup so `pnpm dev` builds `bbs-lib` automatically before launching services
 - [x] Verify `pnpm dev` starts cleanly from a clean state without a prebuilt `bbs-lib/dist`
