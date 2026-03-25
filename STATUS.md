@@ -31,7 +31,7 @@
 - [x] Redeploy the verifier after the wallet SD-JWT and mdoc-path fixes
 - [x] Make the completed wallet verifier page show a prominent human-readable result above the fold
 - [x] Add wallet RP regression coverage for the human-readable completion page
-- [ ] Redeploy the verifier after the wallet result-page update
+- [x] Redeploy the verifier after the wallet result-page update
 
 - [x] Replace the workshop verifier self-signed leaf with a CA root plus verifier leaf chain
 - [x] Update the iOS wallet trust anchor to the workshop CA root
