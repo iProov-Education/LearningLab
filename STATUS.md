@@ -1,5 +1,10 @@
 # Status
 
+- [x] Verify which live GitHub Classroom starter repo backs the RSAC assignment
+- [x] Regenerate the student template from the current instructor repo state
+- [x] Push the regenerated student-safe template into the live assignment starter repo
+- [x] Verify the live starter repo now contains the current fixes so assignment sync can detect changes
+
 - [x] Diagnose why `fast-forward-student-lab.js --target .` fails in student repos despite the student docs recommending it
 - [x] Bundle the minimal working-solution snapshots needed for student self fast-forward
 - [x] Fix the fast-forward helper to use bundled snapshots in student repos and keep instructor-repo safeguards
